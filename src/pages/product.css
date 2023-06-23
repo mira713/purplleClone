@@ -1,0 +1,53 @@
+.grid{
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap : 20px;
+    padding:20px;
+}
+.singlePro{
+    height:60vh;
+    width: 100%;
+    overflow: hidden;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    position:relative;
+}
+.singlePro:hover{
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+    transform: scale(1.02);
+}
+.singlePro>img{
+    height:30vh;
+    width:100%
+}
+.detail{
+    padding:2px;
+    width:100%;
+}
+.text {
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 2; /* number of lines to show */
+            line-clamp: 2; 
+    -webkit-box-orient: vertical;
+ }
+.detail:hover>.price{
+  display:none;
+}
+ .text:hover{
+    display:grid;
+    z-index: 20;
+    background-color: rgb(235, 234, 234);
+    color:rgb(250, 99, 125);
+ }
+ .flexbox{
+    display: flex;
+    justify-content: space-around;
+    position: absolute;
+    bottom:0px;
+    width:100%;
+ }
+ .flexbox>button{
+    width:50%;
+    border-left: 1px solid black;
+    border-right: 1px solid black;
+ }

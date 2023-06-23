@@ -1,0 +1,41 @@
+.FooterBox1{
+    display: grid;
+    grid-template-columns: repeat(4,1fr);
+    justify-content: space-between;
+    margin-bottom: 40px;
+}
+.icons{
+    font-size: 30px;
+}
+.FooterBox2{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 20px;
+    margin-bottom: 30px;
+}
+.FooterBox2 div{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+@media(max-width: 1281px) {
+    .FooterBox2{
+        display: block;
+    }
+}
+@media(max-width: 768px){
+    .FooterBox1{
+        display: grid;
+        grid-template-columns: repeat(3,1fr);
+        gap:"20px"
+    }
+}
+@media(max-width: 600px){
+    .FooterBox1{
+        display: grid;
+        grid-template-columns: repeat(2,1fr);
+        justify-content: space-between;
+        
+    }
+}

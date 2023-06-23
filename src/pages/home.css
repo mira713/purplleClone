@@ -1,0 +1,91 @@
+.topNav{
+    display:flex;
+    justify-content: space-between;
+    background-color: #f9d3e8;
+    padding: 1%;
+}
+.topNavLeft{
+    display:flex;
+    justify-content: space-around;
+    width:40%;
+}
+.topNavRight{
+    display: flex;
+    justify-content: space-around;
+    width:20%;
+}
+.navMid{
+    display:flex;
+    justify-content: space-between;
+    height:auto;
+    padding:1%;
+    background-color:white;
+}
+.navImoji{
+    display: flex;
+    justify-content: space-around;
+    width:20%;
+}
+.sticky{
+    /* position: -webkit-sticky; */
+  position: sticky;
+  top: -10vh;
+  z-index:2;
+}
+.stick{
+    position: sticky;
+    top:-10vh;
+    z-index:0;
+}
+.list{
+  display: flex;
+  width:50%;
+  margin: auto;
+  padding:1%;
+}
+.list:hover{
+    cursor: pointer;
+}
+.navImoji:hover{
+    cursor: pointer;
+}
+.style{
+    position: relative;
+}.search{
+    display:flex;
+    justify-content: space-between;
+    font-size: 20px;
+}
+.search:hover{
+    cursor:pointer
+}
+.inpt:focus{
+ outline: none;
+}
+.draw{
+    background-color: white;
+    border:2px solid #f49fce;
+}
+/* .slick-arrow:before{
+    content:""!important;
+    width: 100%!important;
+    height: 100%!important;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color:red;
+    width:60px!important;
+    height:60px!important;
+}
+.slick-next:before{
+    background-size: contain!important;
+}
+.slick-prev:before{
+    background-size: contain!important;
+}
+.slick-next{
+    right:-30px!important;
+}
+.slick-prev{
+    left:-30px!important;
+} */
