@@ -15,7 +15,8 @@ import Goodvibe from '../allPages/goodvibe';
 import Maybeline from "../allPages/maybeline";
 import Nybae from '../allPages/nybrand';
 import Purplle from '../allPages/purplle';
-import SingleProd from '../usableCompo/singleProd'
+import SingleProd from '../usableCompo/singleProd';
+import OrderPage from '../pages/orderPage';
 
 const AllRoute = () => {
   return (
@@ -39,6 +40,7 @@ const AllRoute = () => {
             <Route path="/nybae" element={<Nybae/>}/>
             <Route path="/purplle" element={<Purplle/>}/>
             <Route path="/singleProd" element={<SingleProd/>}/>
+            <Route path="/order" element={<OrderPage/>}/>
         </Routes>
     </div>
   )

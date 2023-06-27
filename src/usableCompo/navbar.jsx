@@ -26,7 +26,7 @@ const Navbar = () => {
   let onOpen1 = payload.onOpen;
   let onClose1 = payload.onClose;
   let navigate = useNavigate();
-  // const [searchParams, setSearchParams] = useSearchParams();
+  // const [searchParams, setSearchParams] = useSearchParams();  
 
 
   const btnRef = React.useRef()
@@ -35,7 +35,6 @@ const Navbar = () => {
     isOpen ? el.className = "stick" : el.className = "sticky";
     dispatch(search(text))
   }, [isOpen,text])
-
 
   let register=()=>{
     onOpen1();
@@ -48,8 +47,8 @@ const Navbar = () => {
 
   let singlePage = (item) => {
     onClose()
-    navigate('/singleProd')
     localStorage.setItem("product",JSON.stringify(item))
+    navigate('/singleProd')
   }
  
   return (
@@ -104,7 +103,7 @@ const Navbar = () => {
               </PopoverContent>
               </Popover>
             </Box>
-            <Box mr="2%">
+            <Box mr="2%" onClick={()=>navigate('/order')}>
               <BsCartPlus size="30" />
             </Box>
           </Box>
@@ -137,7 +136,7 @@ const Navbar = () => {
                 <br/>
                 {product?.map((el)=>{
                   return(
-                    <Box onClick={()=>singlePage(el)} _hover={{cursor:'pointer'}}>
+                    <Box onClick={()=>singlePage(el)} _hover={{cursor:'pointer'}} key={el._id}>
                       <Flex justifyContent={'space-around'}>
                         <Image src={el.img} alt="img" w="10%" h="50%"/>
                         <Text w="85%">{el.name}</Text>

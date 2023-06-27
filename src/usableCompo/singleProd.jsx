@@ -1,31 +1,38 @@
-import React from 'react'
-import { Flex, Box, Image, Text, Select, Button } from '@chakra-ui/react'
-import { BsStarFill, BsHeart } from "react-icons/bs"
+import React,{useEffect} from 'react'
+import { Flex, Box, Image, Text, Select, Button ,CircularProgress} from '@chakra-ui/react'
+import { BsStarFill, BsHeart } from "react-icons/bs";
+import {addCart} from '../redux/cart/cart.action';
+import { useSelector,useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
 const SingleProd = () => {
-    let [product, setProduct] = React.useState({})
-    let products = JSON.parse(localStorage.getItem('product'));
+    // let products = JSON.parse(localStorage.getItem('product'));
+    let [product, setProduct] = React.useState(JSON.parse(localStorage.getItem('product')))
+    let loading = useSelector(store => store.CartReducer.loading);
+    let data = useSelector(store=>store.CartReducer.data)
+    let dispatch=useDispatch();
+    let navigate = useNavigate();
 
-    React.useEffect(() => {
-        setProduct(products)
-    }, [products])
+let addToCart=(data)=>{
+    dispatch(addCart(data))
+}
 
 
     return (
         <div>
-            <Flex justifyContent={'space-around'}>
+            <Flex justifyContent={'space-around'} key={product?._id}>
                 <Box w='49%'>
-                    <Image src={product.img} alt={product._id} />
+                    <Image src={product?.img} alt={product?._id}  />
                 </Box>
                 <Box w='49%'>
                     <Box className='detail' textAlign={'justify'}>
                         <Box>
-                            <Text fontFamily={'serif'} fontSize="18px" fontWeight={'medium'}>{product.name}</Text>
+                            <Text fontFamily={'serif'} fontSize="18px" fontWeight={'medium'}>{product?.name}</Text>
                         </Box>
                         <Box>
                             <br />
-                            <Flex><Box bgColor={'green.800'} borderRadius={'30px'} w="15%" color="white" fontSize="13px" p='2px'><Flex><Text>{product.rating}</Text><Box margin='auto'><BsStarFill /></Box></Flex></Box><Text color='grey'>{product.ratingCount}</Text></Flex><br />
-                            <Text><span style={{ fontSize: "20px" }}><b>&#8377; {product.price}</b></span>   <span style={{ color: "grey", fontSize: "13px" }}><strike>{product.mrl5}</strike></span>   <span style={{ color: 'red', fontSize: "13px" }}>{product.off2}</span></Text>
+                            <Flex><Box bgColor={'green.800'} borderRadius={'30px'} w="15%" color="white" fontSize="13px" p='2px'><Flex><Text>{product?.rating}</Text><Box margin='auto'><BsStarFill /></Box></Flex></Box><Text color='grey'>{product?.ratingCount}</Text></Flex><br />
+                            <Text><span style={{ fontSize: "20px" }}><b>&#8377; {product?.price}</b></span>   <span style={{ color: "grey", fontSize: "13px" }}><strike>{product?.mrl5}</strike></span>   <span style={{ color: 'red', fontSize: "13px" }}>{product?.off2}</span></Text>
                         </Box>
                         <Box>
                             <Text fontSize="20px" mt={['', '', '', '3%']}>Shades</Text>
@@ -38,8 +45,10 @@ const SingleProd = () => {
                             </Select>
                         </Box>
                         <Flex justifyContent={'space-around'} mt={['', '', '', '5%']}>
-                            <Button w='48%' color='white' bgColor={'purple.500'} p={['', '', '', "6%"]} _hover={{ bgColor: "purple.800" }}>
-                                Add To Cart
+                            <Button w='48%' color='white' bgColor={'purple.500'} p={['', '', '', "6%"]} _hover={{ bgColor: "purple.800" }} onClick={()=>addToCart(product)}>
+                                {loading?<Box ml="40%">
+                                    <CircularProgress isIndeterminate color='pink.500' size="40%" thickness={'10px'}/>
+                                    </Box>:<Text>Add To Cart</Text>}
                             </Button>
                             <Button w="48%" display={'flex'} p={['', '', '', "6%"]}>
                                 <BsHeart size="25" color="purple.100" />

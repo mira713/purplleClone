@@ -3,13 +3,18 @@ import { useSelector,useDispatch } from 'react-redux';
 import axios from 'axios';
 import "../pages/product";
 import {hairmakeup} from '../redux/product/prod.action';
-import {Box,Image,Text,Grid,Flex,Button} from "@chakra-ui/react";
-import { BsCartPlusFill, BsHeartFill, BsStarFill } from 'react-icons/bs'
+import {Box,Image,Text,Grid,Flex,Button,CircularProgress,useToast} from "@chakra-ui/react";
+import { BsCartPlusFill, BsHeartFill, BsStarFill } from 'react-icons/bs';
+import { useNavigate } from 'react-router-dom';
+import { addCart } from '../redux/cart/cart.action';
 
 const Hairmakeup = () => {
    let product = useSelector(store=>store.ProductReducer.data);
    let loading = useSelector(store=>store.ProductReducer.loading);
-   let dispatch = useDispatch()
+   let loadingCart = useSelector(store => store.CartReducer.loading);
+   let dispatch = useDispatch();
+   let navigate = useNavigate();
+   let toast = useToast();
 
   useEffect(()=>{
     dispatch(hairmakeup())
@@ -18,10 +23,19 @@ const Hairmakeup = () => {
   if(loading){
     <div>...loading</div>
   }
-
+  let addToCart=(elem)=>{
+    dispatch(addCart(elem))
+    toast({
+      title: 'Add To Cart',
+      description: "item added to cart successfully.",
+      status: 'success',
+      duration: 9000,
+      isClosable: true,
+    })
+  }
   return (
     <div>
-      {loading && <Grid className='grid'>
+      {loading && <Grid className='grid'templateColumns={{ base: '1fr', md: 'repeat(2, 1fr)', lg:"repeat(4,1fr)" }} gap={4}>
         {product.map((el) => {
           return (
             <Box key={el._id} className='singlePro'>
@@ -36,7 +50,10 @@ const Hairmakeup = () => {
                 </Box>
               </Box>
               <Flex className="flexbox">
-                <Button >
+                <Button onClick={()=>addToCart(el)}>
+                {/* {loading ? <Box ml="40%">
+                    <CircularProgress isIndeterminate color='pink.500' size="40%" thickness={'10px'} />
+                  </Box> : <BsCartPlusFill size='25' />} */}
                   <BsCartPlusFill size='25' />
                 </Button>
                 <Button>

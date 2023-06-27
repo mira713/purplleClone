@@ -3,7 +3,8 @@ import { BOLD, CENTER, FILL_PARENT,  PINK } from "../pages/type";
 import {MdArrowForwardIos,MdArrowBackIosNew} from "react-icons/md"
 
 export default function Paginantion({page,setPage,totalPage,divide}){
-
+    console.log(totalPage,divide)
+console.log(Math.ceil(totalPage/divide) , "ttoottaall")
     return <HStack mt={6}  w={FILL_PARENT} justify={CENTER}>
         <IconButton colorScheme={PINK}  icon={<MdArrowBackIosNew />}  isDisabled={page+1==1} onClick={()=>{
             setPage((prev)=>prev-1)
