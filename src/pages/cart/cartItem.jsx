@@ -9,7 +9,7 @@ import {
   import { PriceTag } from "./priceTag";
   import { CartProductMeta } from "./cartProduct";
   import { useDispatch } from "react-redux";
-  import {deleteCart, updateCart} from "../redux/cart/cart.action"
+  import {deleteCart, updateCart} from "../../redux/cart/cart.action"
   export const CartItem = ({item,handleChange,handleDelete}) => {
     const {
       _id,
@@ -20,6 +20,7 @@ import {
       off2,
       rating,
       ratingCount,
+      quantity,
       src
     } = item;
      item.quantity = 1
@@ -49,7 +50,7 @@ import {
           }}
         >
           <Select
-            defaultValue={item.quantity}
+            defaultValue={quantity}
             maxW="64px"
             aria-label="Select quantity"
             focusBorderColor={useColorModeValue("pink.500", "pink.200")}
@@ -61,7 +62,7 @@ import {
             <option value="4">4</option>
           </Select>
           <PriceTag
-            quantity={item.quantity}
+            quantity={quantity}
             off2={off2}
             price={price}
             mrl5={mrl5}
@@ -84,7 +85,7 @@ import {
           }}
         >
           <Select
-            value={item.quantity}
+            value={quantity}
             maxW="64px"
             aria-label="Select quantity"
             focusBorderColor={useColorModeValue("pink.500", "pink.200")}
@@ -100,7 +101,7 @@ import {
           </Link>
   
           <PriceTag
-            quantity={item.quantity}
+            quantity={quantity}
             off2={off2}
             price={price}
             mrl5={mrl5}

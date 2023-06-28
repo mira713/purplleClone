@@ -1,14 +1,14 @@
 import React,{useEffect,useState} from 'react';
 import { useSelector,useDispatch } from 'react-redux';
 import axios from 'axios';
-import "../pages/product";
-import {lakme} from '../redux/product/prod.action';
+import "./product";
+import {nailmakeup} from '../../redux/product/prod.action';
 import {Box,Image,Text,Grid,Flex,Button,CircularProgress,useToast} from "@chakra-ui/react";
 import { BsCartPlusFill, BsHeartFill, BsStarFill } from 'react-icons/bs';
 import { useNavigate } from 'react-router-dom';
-import { addCart } from '../redux/cart/cart.action';
+import { addCart } from '../../redux/cart/cart.action';
 
-const Lakme = () => {
+const Lipmakeup = () => {
    let product = useSelector(store=>store.ProductReducer.data);
    let loading = useSelector(store=>store.ProductReducer.loading);
    let loadingCart = useSelector(store => store.CartReducer.loading);
@@ -17,13 +17,12 @@ const Lakme = () => {
    let toast = useToast();
 
   useEffect(()=>{
-    dispatch(lakme())
+    dispatch(nailmakeup())
   },[])
 
   if(loading){
     <div>...loading</div>
   }
-
   let addToCart=(elem)=>{
     dispatch(addCart(elem))
     toast({
@@ -34,7 +33,6 @@ const Lakme = () => {
       isClosable: true,
     })
   }
-
   return (
     <div>
       {loading && <Grid className='grid'templateColumns={{ base: '1fr', md: 'repeat(2, 1fr)', lg:"repeat(4,1fr)" }} gap={4}>
@@ -70,4 +68,4 @@ const Lakme = () => {
   )
 }
 
-export default Lakme
+export default Lipmakeup

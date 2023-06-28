@@ -1,30 +1,26 @@
-import React, { useEffect, useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import "./product.css";
-import { useSearchParams ,useNavigate} from "react-router-dom";
-import { getData } from '../redux/product/prod.action';
-import { Box, Image, Text, Grid, Heading, Flex, Button,CircularProgress ,useToast} from "@chakra-ui/react";
-import Paginantion from '../usableCompo/pagination';
+import React,{useEffect,useState} from 'react';
+import { useSelector,useDispatch } from 'react-redux';
+import axios from 'axios';
+import "./product";
+import {lipmakeup} from '../../redux/product/prod.action';
+import {Box,Image,Text,Grid,Flex,Button,CircularProgress,useToast} from "@chakra-ui/react";
 import { BsCartPlusFill, BsHeartFill, BsStarFill } from 'react-icons/bs';
-import { addCart } from '../redux/cart/cart.action';
+import { useNavigate } from 'react-router-dom';
+import { addCart } from '../../redux/cart/cart.action';
 
-const Product = () => {
-  let product = useSelector(store => store.ProductReducer.data);
-  let loading = useSelector(store => store.CartReducer.loading);
-  // const [searchParams, setSearchParams] = useSearchParams();
-  let dispatch = useDispatch();
-  let [page, setPage] = useState(0);
-  let [query, setQuery] = useState("");
-  let totalPage = 240;
-  let divide = 10;
-  let navigate = useNavigate();
-  let toast = useToast()
+const Lipmakeup = () => {
+   let product = useSelector(store=>store.ProductReducer.data);
+   let loading = useSelector(store=>store.ProductReducer.loading);
+   let loadingCart = useSelector(store => store.CartReducer.loading);
+   let dispatch = useDispatch();
+   let navigate =  useNavigate();
+   let toast = useToast();
 
-  useEffect(() => {
-    dispatch(getData(page))
-  }, [page])
+  useEffect(()=>{
+    dispatch(lipmakeup())
+  },[])
 
-  if (loading) {
+  if(loading){
     <div>...loading</div>
   }
   let addToCart=(elem)=>{
@@ -37,13 +33,9 @@ const Product = () => {
       isClosable: true,
     })
   }
-  //  let query = searchParams.get("q")
-  //   ? searchParams.get("q").toLocaleLowerCase()
-  //   : "";
-  console.log(product)
   return (
     <div>
-      {loading && <Grid className='grid'>
+      {loading && <Grid className='grid'templateColumns={{ base: '1fr', md: 'repeat(2, 1fr)', lg:"repeat(4,1fr)" }} gap={4}>
         {product.map((el) => {
           return (
             <Box key={el._id} className='singlePro'>
@@ -59,7 +51,7 @@ const Product = () => {
               </Box>
               <Flex className="flexbox">
                 <Button onClick={()=>addToCart(el)}>
-                  {/* {loading ? <Box ml="40%">
+                {/* {loading ? <Box ml="40%">
                     <CircularProgress isIndeterminate color='pink.500' size="40%" thickness={'10px'} />
                   </Box> : <BsCartPlusFill size='25' />} */}
                   <BsCartPlusFill size='25' />
@@ -72,9 +64,8 @@ const Product = () => {
           )
         })}
       </Grid>}
-      <Paginantion page={page} setPage={setPage} totalPage={totalPage} divide={divide} />
     </div>
   )
 }
 
-export default Product
+export default Lipmakeup

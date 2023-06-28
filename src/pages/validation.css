@@ -70,9 +70,9 @@
     .signup_continue {
       width: 100%;
       height: 46px;
-      background-color: #222222;
-      border: none;
+      background-color: #f5257c;
       color: #ffffff;
+      border: none;
       font-weight: 600;
       cursor: pointer;
     }

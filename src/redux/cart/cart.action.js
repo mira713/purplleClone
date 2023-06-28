@@ -20,7 +20,9 @@ export const getCart = (page=1) => async (dispatch) => {
     };
     dispatch({ type: CART_FUNC_LOADING });
     try{
+        console.log('i am inside try',page)
         let res =await axios.get(`${baseUrl}/cart?page=${page}`,config);
+        console.log('await is done')
         let da = res.data.data;
         let c = res.data.count
         console.log('action: ',res.data)
@@ -40,7 +42,7 @@ export const addCart = (data) => (dispatch) => {
     
     fetch(`${baseUrl}/cart/add`, {
         method: 'POST',
-        body: JSON.stringify([obj]),
+        body: JSON.stringify(obj),
         headers: {
             'Content-type': 'application/json',
             'tkn': token

@@ -21,6 +21,8 @@ import {
   import React, { useState } from "react";
   import { couponData } from "./coupon";
   import { FaArrowRight } from "react-icons/fa";
+  import { useNavigate } from "react-router-dom";
+
   const OrderSummaryItem = (props) => {
     const { label, value, children } = props;
     return (
@@ -43,6 +45,7 @@ import {
     const { isOpen, onOpen, onClose } = useDisclosure();
     const btnRef = React.useRef(null);
     const [coupon, setCoupon] = useState(null);
+    const navigate = useNavigate()
   
    
     return (
@@ -55,8 +58,8 @@ import {
             label="Shipping + Tax(Free Delivery)"
             value={cartTotal}
           ></OrderSummaryItem>
-          {/* <OrderSummaryItem label="Coupon Code"> */}
-            {/* <Button
+          <OrderSummaryItem label="Coupon Code">
+            <Button
               color="black"
               textDecoration="underline"
               fontSize="14px"
@@ -65,8 +68,8 @@ import {
               onClick={onOpen}
             >
               Add coupon code
-            </Button> */}
-          {/* </OrderSummaryItem> */}
+            </Button>
+          </OrderSummaryItem>
           <Modal
             onClose={onClose}
             finalFocusRef={btnRef}
@@ -135,6 +138,7 @@ import {
           size="lg"
           fontSize="md"
           rightIcon={<FaArrowRight />}
+          onClick={()=>navigate('./payment')}
         >
           Checkout
         </Button>

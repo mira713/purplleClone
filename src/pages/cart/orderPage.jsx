@@ -10,7 +10,7 @@ import {
     useColorModeValue as mode,
     useToast,
   } from "@chakra-ui/react";
-  import { deleteCart, getCart, updateCart } from "../redux/cart/cart.action";
+  import { deleteCart, getCart, updateCart } from "../../redux/cart/cart.action";
   import { useDispatch, useSelector } from "react-redux";
   import { useEffect, useState } from "react";
   import { CartItem } from "./cartItem";
@@ -18,7 +18,7 @@ import {
   //import { cartData } from "./data";
   import {CartOrderSummary} from "./cartOrderTotal"
   import "./cart.css";
-import Paginantion from "../usableCompo/pagination";
+import Paginantion from "../../usableCompo/pagination";
 
 
 
@@ -50,6 +50,7 @@ const OrderPage = () => {
   }
   useEffect(()=>{
     dispatch(getCart(page))
+    console.log(getCart)
   },[page])
 
   console.log('home',cart)
@@ -112,7 +113,7 @@ const OrderPage = () => {
               <CartOrderSummary cartTotal={cartTotal} />
               <HStack mt="6" fontWeight="semibold">
                 <p>or</p>
-                <Link color={mode("#e30970", "#e30970")}>
+                <Link color={mode("#e30970", "#e30970")} href="/">
                   Continue shopping
                 </Link>
               </HStack>

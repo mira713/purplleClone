@@ -3,6 +3,11 @@ import axios from "axios";
 const baseUrl = 'https://average-wrap-eel.cyclic.app';
 
 
+export const AllUsers =()=>(dispatch)=>{
+  dispatch({type:GET_USER_REQUEST});
+  fetch(`${baseUrl}/users`).then((res)=>{res.json(); console.log(res)})
+}
+
 export const PostUser = (cred) =>(dispatch) => {
   dispatch({type:GET_USER_REQUEST});
   fetch(`${baseUrl}/users/register`, {
@@ -13,9 +18,12 @@ export const PostUser = (cred) =>(dispatch) => {
         }
     })
         .then(function (response) {
-            return response.json()
+            response.json()
+            localStorage.setItem('resp',response.status)
+            dispatch({type:GET_USER_SUCCESS,payload:response})
         })
-        .then((res)=>dispatch({type:GET_USER_SUCCESS,payload:res}))
+        // .then((res)=>console.log(res.status))
+        // .then((res)=>dispatch({type:GET_USER_SUCCESS,payload:res}))
 }
 
 export const LoginUser = (cred) => (dispatch) => {

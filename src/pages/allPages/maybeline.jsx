@@ -1,23 +1,23 @@
 import React,{useEffect,useState} from 'react';
 import { useSelector,useDispatch } from 'react-redux';
 import axios from 'axios';
-import "../pages/product";
-import {hairmakeup} from '../redux/product/prod.action';
+import "./product";
+import {maybeline} from '../../redux/product/prod.action';
 import {Box,Image,Text,Grid,Flex,Button,CircularProgress,useToast} from "@chakra-ui/react";
 import { BsCartPlusFill, BsHeartFill, BsStarFill } from 'react-icons/bs';
 import { useNavigate } from 'react-router-dom';
-import { addCart } from '../redux/cart/cart.action';
+import { addCart } from '../../redux/cart/cart.action';
 
-const Hairmakeup = () => {
+const Maybeline = () => {
    let product = useSelector(store=>store.ProductReducer.data);
    let loading = useSelector(store=>store.ProductReducer.loading);
    let loadingCart = useSelector(store => store.CartReducer.loading);
    let dispatch = useDispatch();
-   let navigate = useNavigate();
+   let navigate =  useNavigate();
    let toast = useToast();
 
   useEffect(()=>{
-    dispatch(hairmakeup())
+    dispatch(maybeline())
   },[])
 
   if(loading){
@@ -68,4 +68,4 @@ const Hairmakeup = () => {
   )
 }
 
-export default Hairmakeup
+export default Maybeline

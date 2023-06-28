@@ -1,9 +1,9 @@
-import React, { useEffect ,useState} from 'react'
-import { useNavigate, useSearchParams,Link} from 'react-router-dom';
+import React, { useEffect, useState } from 'react'
+import { useNavigate, useSearchParams, Link } from 'react-router-dom';
 import {
   Image, Box, Text, Button, useDisclosure, Drawer, PopoverContent, PopoverHeader, PopoverBody,
-  DrawerOverlay, DrawerContent, DrawerHeader, DrawerBody, DrawerCloseButton, Input, PopoverTrigger, Popover,Modal,
-  Flex
+  DrawerOverlay, DrawerContent, DrawerHeader, DrawerBody, DrawerCloseButton, Input, PopoverTrigger, Popover, Modal,
+  Flex, useToast
 } from '@chakra-ui/react';
 import '../pages/home.css';
 import { RxCross2 } from 'react-icons/rx';
@@ -12,7 +12,7 @@ import { BsEmojiSmile, BsCartPlus } from 'react-icons/bs';
 import Dropdown from './dropdown'
 import { useSelector, useDispatch } from "react-redux";
 import { Credential } from './dropdown';
-import {search} from '../redux/search/search.action';
+import { search } from '../redux/search/search.action';
 
 const Navbar = () => {
 
@@ -20,12 +20,13 @@ const Navbar = () => {
   let product = useSelector(store => store.SearchReducer.data) || [];
   let loading = useSelector(store => store.SearchReducer.loading);
   let [text, setText] = useState('');
-  let dispatch=useDispatch()
+  let dispatch = useDispatch()
   let payload = useDisclosure();
   let isOpen1 = payload.isOpen;
   let onOpen1 = payload.onOpen;
   let onClose1 = payload.onClose;
   let navigate = useNavigate();
+  let toast = useToast()
   // const [searchParams, setSearchParams] = useSearchParams();  
 
 
@@ -34,23 +35,46 @@ const Navbar = () => {
     let el = document.querySelector('#elem');
     isOpen ? el.className = "stick" : el.className = "sticky";
     dispatch(search(text))
-  }, [isOpen,text])
+  }, [isOpen, text])
 
-  let register=()=>{
+  let register = () => {
     onOpen1();
   }
 
   // let query = searchParams.get("q")
   // ? searchParams.get("q").toLocaleLowerCase()
   // : "";
-      
+
 
   let singlePage = (item) => {
     onClose()
-    localStorage.setItem("product",JSON.stringify(item))
+    localStorage.setItem("product", JSON.stringify(item))
     navigate('/singleProd')
   }
- 
+  let LogOut = () => {
+    let isAuth= localStorage.getItem('isAuth');
+    if(isAuth){
+      localStorage.removeItem('token')
+      localStorage.removeItem('isAuth')
+      
+      toast({
+        title: 'logout successfully !',
+        description: "Go to Login ",
+        status: 'success',
+        duration: 9000,
+        isClosable: true,
+      })
+    }else{
+      toast({
+        title: 'already logout!',
+        description: "Go to Login ",
+        status: 'info',
+        duration: 9000,
+        isClosable: true,
+      })
+    }
+    
+  }
   return (
     <div id="elem" className='sticky'>
       <Box className="topNav">
@@ -86,24 +110,25 @@ const Navbar = () => {
                 <PopoverTrigger>
                   <BsEmojiSmile size='30' />
                 </PopoverTrigger>
-                <PopoverContent backgroundColor={"white"}w={['30vw','27vw','24vw','22vw',"20vw"]}
+                <PopoverContent backgroundColor={"white"} w={['30vw', '27vw', '24vw', '22vw', "20vw"]}
                   position="absolute"
                   top={['18vh', '17vh', '10vh', '22vh', '20vh']}
                   left={['71vw', '72vw', '75vw', '72vw', '75vw']}
                   p='3vh'
                   fontSize={'13px'}>
                   <PopoverHeader fontWeight={'bold'} backgroundColor={'purple'} color="white" p="2vh"><Link to='/login'>Log in</Link></PopoverHeader>
-                 <PopoverBody>
-                      <Text fontWeight="bold"mt='1' _hover={{ color: "purple" }}><Link to="/register">New Customer?<span style={{color:"red"}}> start here</span></Link></Text>
-                      <Text fontWeight="bold"mt='1' _hover={{ color: "purple" }}>Your account</Text>
-                      <Text fontWeight="bold"mt='1' _hover={{ color: "purple" }}>Your wishlist</Text>
-                      <Text fontWeight="bold"mt='1' _hover={{ color: "purple" }}>Your orders</Text>
-                      <Text mt='1'color="red">Register</Text>
-                    </PopoverBody>
-              </PopoverContent>
+                  <PopoverBody>
+                    <Text fontWeight="bold" mt='1' _hover={{ color: "purple" }}><Link to="/register">New Customer?<span style={{ color: "red" }}> start here</span></Link></Text>
+                    <Text fontWeight="bold" mt='1' _hover={{ color: "purple" }}>Your account</Text>
+                    <Text fontWeight="bold" mt='1' _hover={{ color: "purple" }}>Your wishlist</Text>
+                    <Text fontWeight="bold" mt='1' _hover={{ color: "purple" }}>Your orders</Text>
+                    <Text fontWeight="bold" mt='1' _hover={{ color: "purple" }} onClick={() => LogOut()}>Logout</Text>
+                    <Text mt='1' color="red">Register</Text>
+                  </PopoverBody>
+                </PopoverContent>
               </Popover>
             </Box>
-            <Box mr="2%" onClick={()=>navigate('/order')}>
+            <Box mr="2%" onClick={() => navigate('/order')}>
               <BsCartPlus size="30" />
             </Box>
           </Box>
@@ -129,19 +154,19 @@ const Navbar = () => {
             <br />
             <DrawerBody >
               <Box w='100%' borderBottom={"2px solid red"} display={'flex'}>
-                <Input placeholder='Type here...'w='95%'h='6vh'className="inpt"onChange={(e)=>setText(e.target.value)}/>
+                <Input placeholder='Type here...' w='95%' h='6vh' className="inpt" onChange={(e) => setText(e.target.value)} />
                 <Box w='5%'>{<AiOutlineSearch size="25" />}</Box>
               </Box>
-              <Box className="options" h={product[1]?"50vh":"0px"} overflow={product[1]?"scroll":""}>
-                <br/>
-                {product?.map((el)=>{
-                  return(
-                    <Box onClick={()=>singlePage(el)} _hover={{cursor:'pointer'}} key={el._id}>
+              <Box className="options" h={product[1] ? "50vh" : "0px"} overflow={product[1] ? "scroll" : ""}>
+                <br />
+                {product?.map((el) => {
+                  return (
+                    <Box onClick={() => singlePage(el)} _hover={{ cursor: 'pointer' }} key={el._id}>
                       <Flex justifyContent={'space-around'}>
-                        <Image src={el.img} alt="img" w="10%" h="50%"/>
+                        <Image src={el.img} alt="img" w="10%" h="50%" />
                         <Text w="85%">{el.name}</Text>
                       </Flex>
-                      <hr/>
+                      <hr />
                     </Box>
                   )
                 })

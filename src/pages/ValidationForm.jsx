@@ -2,9 +2,9 @@ import "./validation.css";
 import { Text, useToast } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { PostUser } from '../redux/authCred/auth.action';
+import { PostUser ,AllUsers} from '../redux/authCred/auth.action';
 //import { baseUrl } from '../Utils/backendUrl'
 // import Loading from "../../Components/CartProductCard/Loading";
 
@@ -21,12 +21,11 @@ const ValidationForm = () => {
     const [Load, setload] = useState(false);
     const navigate = useNavigate();
     const toast = useToast();
-    let loading = useSelector(store=>store.AuthReducer.isAuthLoading)
-    let authenticated = useSelector(store=>store.AuthReducer.isAuth)
+    let loading = useSelector(store => store.AuthReducer.isAuthLoading)
+    let authenticated = useSelector(store => store.AuthReducer.isAuth)
     const dispatch = useDispatch();
-    const baseUrl = 'https://average-wrap-eel.cyclic.app'
-    
-    
+
+
     const handleChange = (e) => {
         const { name, value } = e.target;
         setFields({ ...fields, [name]: value });
@@ -35,60 +34,60 @@ const ValidationForm = () => {
     const onSubmit = (event) => {
         event.preventDefault();
 
-        let name = fields.firstName+" "+fields.lastName;
+        let name = fields.firstName + " " + fields.lastName;
         let number = fields.phone;
         let email = fields.email;
         let password = fields.password;
 
-        if(password.length!==6){
-            return  toast({
-                 title: 'Register Failed',
-                 description: 'Password must be of 6 letters',
-                 status: 'error',
-                 duration: 9000,
-                 isClosable: true,
-                  })
+        if (password.length <= 5) {
+            return toast({
+                title: 'Register Failed',
+                description: 'Password must be of 6 letters',
+                status: 'error',
+                duration: 9000,
+                isClosable: true,
+            })
         }
         if (
-              fields.firstName == "" ||
-              fields.lastName == "" ||
-              fields.email == "" ||
-              fields.phone == "" ||
-              fields.password == ""
-            ){
-                return  toast({
-                    title: 'Register Failed',
-                    description: 'fill out all the neccessary fields',
-                    status: 'error',
-                    duration: 9000,
-                    isClosable: true,
-                     })
-            }else{
-
-        let obj={name,number, email,password}
-       
-            dispatch(PostUser(obj))
-            if(authenticated){
+            fields.firstName == "" ||
+            fields.lastName == "" ||
+            fields.email == "" ||
+            fields.phone == "" ||
+            fields.password == ""
+        ) {
+            return toast({
+                title: 'Register Failed',
+                description: 'fill out all the neccessary fields',
+                status: 'error',
+                duration: 9000,
+                isClosable: true,
+            })
+        } else {
+            let obj = { name, number, email, password }
+            dispatch(PostUser(obj));
+            dispatch(AllUsers())
+            let auth = localStorage.getItem('resp')
+            console.log(auth)
+            if (auth==200) {
                 (toast({
                     title: 'Register successful !',
                     description: "Go to Login",
                     status: 'success',
                     duration: 9000,
                     isClosable: true,
-                  }))
-                  navigate('/')
+                }))
+                navigate('/')
 
-            }else{
+            } else {
                 (toast({
                     title: 'Registeration failed!',
                     description: "Something went wrong",
                     status: 'error',
                     duration: 9000,
                     isClosable: true,
-                  }))
+                }))
             }
-            
-                }
+        }
     };
 
     return (
@@ -176,7 +175,7 @@ const ValidationForm = () => {
                         />
                     </label>
                     <br />
-                    <Text mt="5px" color="red" display={fields.password.length === 6 ? "none" : "flex"} > Password must be 6 Letters</Text>
+                    <Text mt="5px" color="red" display={fields.password.length <= 5 ? "flex" : "none"} > Password must be 6 Letters</Text>
                 </p>
 
                 {/* Confirm password */}

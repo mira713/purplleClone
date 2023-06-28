@@ -1,14 +1,14 @@
 import React,{useEffect,useState} from 'react';
 import { useSelector,useDispatch } from 'react-redux';
 import axios from 'axios';
-import "../pages/product";
-import {nailmakeup} from '../redux/product/prod.action';
+import "./product";
+import {nybae} from '../../redux/product/prod.action';
 import {Box,Image,Text,Grid,Flex,Button,CircularProgress,useToast} from "@chakra-ui/react";
 import { BsCartPlusFill, BsHeartFill, BsStarFill } from 'react-icons/bs';
 import { useNavigate } from 'react-router-dom';
-import { addCart } from '../redux/cart/cart.action';
+import { addCart } from '../../redux/cart/cart.action';
 
-const Lipmakeup = () => {
+const Nybrand = () => {
    let product = useSelector(store=>store.ProductReducer.data);
    let loading = useSelector(store=>store.ProductReducer.loading);
    let loadingCart = useSelector(store => store.CartReducer.loading);
@@ -17,7 +17,7 @@ const Lipmakeup = () => {
    let toast = useToast();
 
   useEffect(()=>{
-    dispatch(nailmakeup())
+    dispatch(nybae())
   },[])
 
   if(loading){
@@ -68,4 +68,4 @@ const Lipmakeup = () => {
   )
 }
 
-export default Lipmakeup
+export default Nybrand

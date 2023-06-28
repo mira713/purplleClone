@@ -3,20 +3,21 @@ import { Route,Routes } from 'react-router-dom'
 import Home from '../pages/home'
 import Register from '../pages/register'
 import Login from '../pages/login'
-import Product from '../pages/product'
-import Facemakeup from '../allPages/facemakeup';
-import Lipmakeup from '../allPages/lipmakeup';
-import Eyemakeup from '../allPages/eyemakeup';
-import Nailmakeup from '../allPages/eyemakeup';
-import Hairmakeup from '../allPages/hair';
-import Lakme from '../allPages/lakme';
-import Facecanada from '../allPages/facecanada';
-import Goodvibe from '../allPages/goodvibe';
-import Maybeline from "../allPages/maybeline";
-import Nybae from '../allPages/nybrand';
-import Purplle from '../allPages/purplle';
+import Product from '../pages/allPages/product'
+import Facemakeup from '../pages/allPages/facemakeup';
+import Lipmakeup from '../pages/allPages/lipmakeup';
+import Eyemakeup from '../pages/allPages/eyemakeup';
+import Nailmakeup from '../pages/allPages/eyemakeup';
+import Hairmakeup from '../pages/allPages/hair';
+import Lakme from '../pages/allPages/lakme';
+import Facecanada from '../pages/allPages/facecanada';
+import Goodvibe from '../pages/allPages/goodvibe';
+import Maybeline from "../pages/allPages/maybeline";
+import Nybae from '../pages/allPages/nybrand';
+import Purplle from '../pages/allPages/purplle';
 import SingleProd from '../usableCompo/singleProd';
-import OrderPage from '../pages/orderPage';
+import OrderPage from '../pages/cart/orderPage';
+import Payment from '../pages/payment/payment'
 
 const AllRoute = () => {
   return (
@@ -41,6 +42,7 @@ const AllRoute = () => {
             <Route path="/purplle" element={<Purplle/>}/>
             <Route path="/singleProd" element={<SingleProd/>}/>
             <Route path="/order" element={<OrderPage/>}/>
+            <Route path="/order/payment" element={<Payment/>}/>
         </Routes>
     </div>
   )

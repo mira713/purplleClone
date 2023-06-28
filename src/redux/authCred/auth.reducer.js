@@ -5,7 +5,8 @@ const initialState = {
     isAuth: "",
     token: '',
     isAuthLoading: false,
-    isAuthError: false
+    isAuthError: false,
+    data:{}
 }
 
 export const reducer = (state = initialState, action) => {
@@ -19,7 +20,7 @@ export const reducer = (state = initialState, action) => {
         case types.GET_USER_SUCCESS: {
             //SetLocal('isAuth', true)
             return {
-                ...state, isLoading: false, token: payload, isAuth: true
+                ...state, isLoading: false, data : payload, isAuth: true
             }
         }
         case types.GET_USER_FAILURE: {
