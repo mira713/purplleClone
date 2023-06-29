@@ -79,12 +79,12 @@ const Navbar = () => {
     <div id="elem" className='sticky'>
       <Box className="topNav">
         <Box className="topNavLeft">
-          <Image src="https://media6.ppl-media.com/mediafiles/ecomm/home/1543587824_logo.png" alt="logo" h='auto' w='7%' />
-          <Text>FLAT Rs. 100 OFF on Your first order!</Text>
-          <Text>Use Code: APPFIRST</Text>
+          <Image src="https://media6.ppl-media.com/mediafiles/ecomm/home/1543587824_logo.png" alt="logo" h='auto' w='10%'/>
+          <Text fontSize={['10px','12px','14px','16px']}>FLAT Rs. 100 OFF on Your first order!</Text>
+          <Text fontSize={['10px','12px','14px','16px']}>Use Code: APPFIRST</Text>
         </Box>
-        <Box className="topNavRight">
-          <Button>DOWNLOAD APP</Button>
+        <Box className="topNavRight" p="8px" w="auto">
+          <Button fontSize={['10px','12px','14px','16px']}>DOWNLOAD APP</Button>
           <Button>
             <RxCross2 size="20" />
           </Button>
@@ -99,7 +99,7 @@ const Navbar = () => {
             </Box>
           </Box>
           <Box>
-            <Image src="https://media6.ppl-media.com/static/purplle/img/purplle-logo-1.svg" alt="purplle" />
+            <Image src="https://media6.ppl-media.com/static/purplle/img/purplle-logo-1.svg" alt="purplle"/>
           </Box>
           <Box className='navImoji' mr="2%">
             <Box mr="2%">

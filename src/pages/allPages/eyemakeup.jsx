@@ -14,12 +14,14 @@ const Eyemakeup = () => {
    let loadingCart = useSelector(store => store.CartReducer.loading);
    let dispatch = useDispatch();
    let navigate = useNavigate();
+   let [data, setData] = useState(product)
    let toast = useToast();
    let [page, setPage] = useState(0);
    
 
   useEffect(()=>{
     dispatch(eyemakeup())
+    
   },[])
 
   if(loading){
@@ -35,7 +37,10 @@ const Eyemakeup = () => {
       isClosable: true,
     })
   }
-
+let getProductDetail=(item)=>{
+  localStorage.setItem(JSON.stringify('product',item));
+  navigate('/singleProd')
+}
   return (
     <Box>
       <Text></Text>
@@ -43,7 +48,7 @@ const Eyemakeup = () => {
         <Grid className='grid' templateColumns={{ base: '1fr', md: 'repeat(2, 1fr)', lg:"repeat(4,1fr)" }} gap={4}>
           {product.map((el) => {
             return (
-              <Box key={el._id} className='singlePro'>
+              <Box key={el._id} className='singlePro' onClick={()=>getProductDetail(el)}>
                 <Image src={el.img} alt={el._id} h="50%" w='100%' />
                 <Box className='detail'>
                   <Box className='text'>

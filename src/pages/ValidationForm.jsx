@@ -64,31 +64,30 @@ const ValidationForm = () => {
             })
         } else {
             let obj = { name, number, email, password }
-            dispatch(PostUser(obj));
-            dispatch(AllUsers())
-            let auth = localStorage.getItem('resp')
-            console.log(auth)
-            if (auth==200) {
-                (toast({
-                    title: 'Register successful !',
-                    description: "Go to Login",
-                    status: 'success',
-                    duration: 9000,
-                    isClosable: true,
-                }))
-                navigate('/')
-
-            } else {
-                (toast({
-                    title: 'Registeration failed!',
-                    description: "Something went wrong",
-                    status: 'error',
-                    duration: 9000,
-                    isClosable: true,
-                }))
-            }
+            dispatch(PostUser(obj)).then(r=>{
+                if (r.payload.email) {
+                    (toast({
+                        title: 'Registeration successful!',
+                        description: "go to login",
+                        status: 'success',
+                        duration: 9000,
+                        isClosable: true,
+                    }))
+                    } else {
+                        (toast({
+                            title: 'Registeration failed!',
+                            description: "Something went wrong",
+                            status: 'error',
+                            duration: 9000,
+                            isClosable: true,
+                        }))
+                    }
+            });
         }
+
+        setFields(initialState)
     };
+
 
     return (
         <div className="validation_form">

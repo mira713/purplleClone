@@ -1,4 +1,4 @@
-.FooterBox1{
+.FooterBox1,.FooterBox2{
     display: grid;
     grid-template-columns: repeat(4,1fr);
     justify-content: space-between;
@@ -17,11 +17,12 @@
 .FooterBox2 div{
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 1px;
 }
 @media(max-width: 1281px) {
     .FooterBox2{
         display: block;
+        width:50%
     }
 }
 @media(max-width: 768px){
@@ -30,6 +31,9 @@
         grid-template-columns: repeat(3,1fr);
         gap:"20px"
     }
+    .FooterBox2{
+        width:50%
+    }
 }
 @media(max-width: 600px){
     .FooterBox1{
@@ -37,5 +41,8 @@
         grid-template-columns: repeat(2,1fr);
         justify-content: space-between;
         
+    }
+    .FooterBox2{
+        width:50%
     }
 }

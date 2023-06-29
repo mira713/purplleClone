@@ -17,7 +17,7 @@ import Nybae from '../pages/allPages/nybrand';
 import Purplle from '../pages/allPages/purplle';
 import SingleProd from '../usableCompo/singleProd';
 import OrderPage from '../pages/cart/orderPage';
-import Payment from '../pages/payment/payment'
+import Payment from '../pages/payment/payment';
 
 const AllRoute = () => {
   return (

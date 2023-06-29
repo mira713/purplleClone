@@ -25,32 +25,42 @@ function Login() {
    let obj = {email:email,password:password}
     if (email !== "" && password !== "") {
 
-      dispatch(LoginUser(obj))
-   console.log('auth',authenticated) 
+      dispatch(LoginUser(obj)).then(r=>{
+        if(localStorage.getItem("token")){
+          (toast({
+            title: 'Login successful!',
+            description: "You are Already logged in",
+            status: 'info',
+            duration: 9000,
+            isClosable: true,
+        }))
+        }else
+        if(r.payload.msg) {
+          localStorage.setItem('token',r.payload.token)
+          navigate('/')
+          (toast({
+              title: 'Login successful!',
+              description: "You are Logged In",
+              status: 'success',
+              duration: 9000,
+              isClosable: true,
+          }))
+          } else {
+              (toast({
+                  title: 'Login failed!',
+                  description: "Something went wrong",
+                  status: 'error',
+                  duration: 9000,
+                  isClosable: true,
+              }))
+          }
+      })
+   
     }
+    setEmail('');
+    setPassword('')
   };
 
-useEffect(()=>{
-  if(authenticated){
-    toast({
-      title: 'Login successful',
-      description: 'you are logged in',
-      status: 'success',
-      duration: 9000,
-      isClosable: true,
-    })
-    navigate('/')
-  }
-  else if(authenticated===false){
-    toast({
-      title:"Login failed",
-      description : "Something went wrong, Please try again later",
-      status : "error",
-      duration :5000,
-      isClosable : true
-    })
-  }
-},[authenticated])
   return (
     <div className="login_parent">
       {/* {Load ? (

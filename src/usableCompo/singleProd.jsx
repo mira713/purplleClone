@@ -6,7 +6,7 @@ import { useSelector,useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
 const SingleProd = () => {
-    // let products = JSON.parse(localStorage.getItem('product'));
+    let products = JSON.parse(localStorage.getItem('product'));
     let [product, setProduct] = React.useState(JSON.parse(localStorage.getItem('product')))
     let loading = useSelector(store => store.CartReducer.loading);
     let data = useSelector(store=>store.CartReducer.data)
