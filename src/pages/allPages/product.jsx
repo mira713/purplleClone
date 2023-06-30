@@ -40,15 +40,19 @@ const Product = () => {
   //  let query = searchParams.get("q")
   //   ? searchParams.get("q").toLocaleLowerCase()
   //   : "";
-  console.log(product)
+  //console.log(product)
+  let getProductDetail=(item)=>{
+    localStorage.setItem('product', JSON.stringify(item));
+    navigate('/singleProd')
+  }
   return (
     <div>
-      {loading && <Grid className='grid'>
+      {loading && <Grid className='grid'templateColumns={{ base: '1fr', md: 'repeat(2, 1fr)', lg:"repeat(4,1fr)" }} gap={4}>
         {product.map((el) => {
           return (
             <Box key={el._id} className='singlePro'>
-              <Image src={el.img} alt={el._id} h="50%" w='100%' />
-              <Box className='detail'>
+              <Image src={el.img} alt={el._id} h="50%" w='100%'onClick={()=>getProductDetail(el)} />
+              <Box className='detail'onClick={()=>getProductDetail(el)}>
                 <Box className='text'>
                   <Text>{el.name}</Text>
                 </Box>
@@ -58,16 +62,10 @@ const Product = () => {
                 </Box>
               </Box>
               <Flex className="flexbox">
-                <Button onClick={()=>addToCart(el)}>
-                  {/* {loading ? <Box ml="40%">
-                    <CircularProgress isIndeterminate color='pink.500' size="40%" thickness={'10px'} />
-                  </Box> : <BsCartPlusFill size='25' />} */}
-                  <BsCartPlusFill size='25' />
-                </Button>
-                <Button>
-                  <BsHeartFill size="25" color="red" />
-                </Button>
-              </Flex>
+                  <Button onClick={() => addToCart(el)}>
+                    <Text >Add To Cart</Text>
+                  </Button>
+                </Flex>
             </Box>
           )
         })}

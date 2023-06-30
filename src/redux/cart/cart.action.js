@@ -38,23 +38,9 @@ export const addCart = (data) => (dispatch) => {
     let obj = {href, img,offers,name,src,price,mrl5,off2,rating,ratingCount,tkPk,quantity:quantity||1}
     dispatch({ type: CART_FUNC_LOADING });
     obj = [obj]
-    let token = localStorage.getItem('token');
-    
-    fetch(`${baseUrl}/cart/add`, {
-        method: 'POST',
-        body: JSON.stringify(obj),
-        headers: {
-            'Content-type': 'application/json',
-            'tkn': token
-        }
-    })
-        .then((response) => {
-            response.json()
-            console.log(response)
-            dispatch({ type: CART_ADD_SUCCESS, payload: obj })
-        }
-        )
-        .catch((err) => dispatch({ type: CART_FUNC_ERROR, payload: err.message }))
+
+    return axios.post(`${baseUrl}/cart/add`,obj,{headers:{tkn:localStorage.getItem("token")}})
+    .then(r=>dispatch({type: CART_ADD_SUCCESS, payload:r.data}))
 }
 
 export const updateCart = (product) => async (dispatch) => {

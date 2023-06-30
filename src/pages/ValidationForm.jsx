@@ -33,13 +33,14 @@ const ValidationForm = () => {
 
     const onSubmit = (event) => {
         event.preventDefault();
-
+       setload(true)
         let name = fields.firstName + " " + fields.lastName;
         let number = fields.phone;
         let email = fields.email;
         let password = fields.password;
 
         if (password.length <= 5) {
+            
             return toast({
                 title: 'Register Failed',
                 description: 'Password must be of 6 letters',
@@ -66,6 +67,8 @@ const ValidationForm = () => {
             let obj = { name, number, email, password }
             dispatch(PostUser(obj)).then(r=>{
                 if (r.payload.email) {
+                    setload(false)
+                    navigate('/')
                     (toast({
                         title: 'Registeration successful!',
                         description: "go to login",
@@ -74,6 +77,7 @@ const ValidationForm = () => {
                         isClosable: true,
                     }))
                     } else {
+                        setload(false)
                         (toast({
                             title: 'Registeration failed!',
                             description: "Something went wrong",
@@ -199,7 +203,7 @@ const ValidationForm = () => {
 
                 <p>
                     <button className="signup_continue" type="submit">
-                        CREATE AN ACCOUNT
+                        {Load?<p>CREATING ACCOUNT</p>:<p>CREATE AN ACCOUNT</p>}
                     </button>
                 </p>
             </form>

@@ -11,13 +11,15 @@ import { AiOutlineSearch, AiOutlineHeart } from 'react-icons/ai';
 import { BsEmojiSmile, BsCartPlus } from 'react-icons/bs';
 import Dropdown from './dropdown'
 import { useSelector, useDispatch } from "react-redux";
-import { Credential } from './dropdown';
+import { getCart } from '../redux/cart/cart.action';
 import { search } from '../redux/search/search.action';
 
 const Navbar = () => {
 
   const { isOpen, onOpen, onClose } = useDisclosure();
   let product = useSelector(store => store.SearchReducer.data) || [];
+  let countCart = useSelector(store=>store.CartReducer.count);
+  let [auth, setAuth] = useState(localStorage.getItem('isAuth')?true:false)
   let loading = useSelector(store => store.SearchReducer.loading);
   let [text, setText] = useState('');
   let dispatch = useDispatch()
@@ -35,6 +37,7 @@ const Navbar = () => {
     let el = document.querySelector('#elem');
     isOpen ? el.className = "stick" : el.className = "sticky";
     dispatch(search(text))
+    dispatch(getCart())
   }, [isOpen, text])
 
   let register = () => {
@@ -73,7 +76,7 @@ const Navbar = () => {
         isClosable: true,
       })
     }
-    
+    window.location.reload();
   }
   return (
     <div id="elem" className='sticky'>
@@ -116,20 +119,21 @@ const Navbar = () => {
                   left={['71vw', '72vw', '75vw', '72vw', '75vw']}
                   p='3vh'
                   fontSize={'13px'}>
-                  <PopoverHeader fontWeight={'bold'} backgroundColor={'purple'} color="white" p="2vh"><Link to='/login'>Log in</Link></PopoverHeader>
+                  <PopoverHeader fontWeight={'bold'} backgroundColor={'purple'} color="white" p="2vh"onClick={()=>navigate('/login')}>Log in</PopoverHeader>
                   <PopoverBody>
-                    <Text fontWeight="bold" mt='1' _hover={{ color: "purple" }}><Link to="/register">New Customer?<span style={{ color: "red" }}> start here</span></Link></Text>
+                    <Text fontWeight="bold" mt='1' _hover={{ color: "purple" }}onClick={()=>navigate('/register')}>New Customer?<span style={{ color: "red" }}> start here</span></Text>
                     <Text fontWeight="bold" mt='1' _hover={{ color: "purple" }}>Your account</Text>
-                    <Text fontWeight="bold" mt='1' _hover={{ color: "purple" }}>Your wishlist</Text>
-                    <Text fontWeight="bold" mt='1' _hover={{ color: "purple" }}>Your orders</Text>
+                    <Text fontWeight="bold" mt='1' _hover={{ color: "purple" }} onClick={()=>navigate('/wishlist')}>Your wishlist</Text>
+                    <Text fontWeight="bold" mt='1' _hover={{ color: "purple" }} onClick={()=> navigate('/order')}>Your orders</Text>
                     <Text fontWeight="bold" mt='1' _hover={{ color: "purple" }} onClick={() => LogOut()}>Logout</Text>
-                    <Text mt='1' color="red">Register</Text>
+                    <Text mt='1' color="red" onClick={()=>navigate('/register')}>Register</Text>
                   </PopoverBody>
                 </PopoverContent>
               </Popover>
             </Box>
-            <Box mr="2%" onClick={() => navigate('/order')}>
+            <Box mr="2%" onClick={() => navigate('/order')} position="relative">
               <BsCartPlus size="30" />
+              <div style={{height:'25px', width:"25px", borderRadius:"50%", backgroundColor:"red",color:"white",position:"absolute", top:"-13px", left:"13px",visibility:countCart==0&&auth==true?"hidden":""}}>{countCart}</div>
             </Box>
           </Box>
         </Box>

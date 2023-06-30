@@ -138,7 +138,7 @@ import {
           size="lg"
           fontSize="md"
           rightIcon={<FaArrowRight />}
-          onClick={()=>navigate('./payment')}
+          onClick={()=>navigate('/payment')}
         >
           Checkout
         </Button>

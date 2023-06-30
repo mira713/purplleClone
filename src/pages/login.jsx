@@ -21,12 +21,15 @@ function Login() {
   const token = useSelector(store=>store.AuthReducer.token)
 
   const handleLogin = (event) => {
+    setload(true)
     event.preventDefault();
    let obj = {email:email,password:password}
     if (email !== "" && password !== "") {
-
+           
       dispatch(LoginUser(obj)).then(r=>{
+         
         if(localStorage.getItem("token")){
+          setload(false)
           (toast({
             title: 'Login successful!',
             description: "You are Already logged in",
@@ -37,6 +40,7 @@ function Login() {
         }else
         if(r.payload.msg) {
           localStorage.setItem('token',r.payload.token)
+          setload(false)
           navigate('/')
           (toast({
               title: 'Login successful!',
@@ -46,6 +50,8 @@ function Login() {
               isClosable: true,
           }))
           } else {
+            setload(false)
+            console.log(r.payload)
               (toast({
                   title: 'Login failed!',
                   description: "Something went wrong",
@@ -106,7 +112,7 @@ function Login() {
 
               <p>
                 <button className="login_button">
-                  LOGIN TO YOUR ACCOUNT
+                  {Load?<p>LOOKING FOR CRIDENTIALS</p>:<p>LOGIN TO YOUR ACCOUNT</p>}
                 </button>
               </p>
             </form>

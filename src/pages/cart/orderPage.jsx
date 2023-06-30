@@ -47,6 +47,7 @@ const OrderPage = () => {
   let handleDelete = (productId) =>{
     dispatch(deleteCart(productId))
    dispatch(getCart())
+   window.location.reload();
   }
   useEffect(()=>{
     dispatch(getCart(page))

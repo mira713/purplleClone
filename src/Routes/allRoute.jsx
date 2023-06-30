@@ -18,6 +18,8 @@ import Purplle from '../pages/allPages/purplle';
 import SingleProd from '../usableCompo/singleProd';
 import OrderPage from '../pages/cart/orderPage';
 import Payment from '../pages/payment/payment';
+import Wishlist from '../pages/wishList/wishlist';
+import PrivateRoute from './privateRoute'
 
 const AllRoute = () => {
   return (
@@ -41,8 +43,9 @@ const AllRoute = () => {
             <Route path="/nybae" element={<Nybae/>}/>
             <Route path="/purplle" element={<Purplle/>}/>
             <Route path="/singleProd" element={<SingleProd/>}/>
-            <Route path="/order" element={<OrderPage/>}/>
-            <Route path="/order/payment" element={<Payment/>}/>
+            <Route path="/order" element={<PrivateRoute><OrderPage/></PrivateRoute>}/>
+            <Route path="/payment" element={<Payment/>}/>
+            <Route path='/wishlist' element={<Wishlist/>}/>
         </Routes>
     </div>
   )

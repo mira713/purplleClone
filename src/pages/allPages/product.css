@@ -41,13 +41,10 @@
  }
  .flexbox{
     display: flex;
-    justify-content: space-around;
     position: absolute;
     bottom:0px;
     width:100%;
  }
  .flexbox>button{
-    width:50%;
-    border-left: 1px solid black;
-    border-right: 1px solid black;
+    width:100%;
  }

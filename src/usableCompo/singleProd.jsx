@@ -1,21 +1,53 @@
-import React,{useEffect} from 'react'
-import { Flex, Box, Image, Text, Select, Button ,CircularProgress} from '@chakra-ui/react'
-import { BsStarFill, BsHeart } from "react-icons/bs";
+import React,{useEffect,useState} from 'react'
+import { Flex, Box, Image, Text, Select, Button, useToast ,CircularProgress} from '@chakra-ui/react'
+import { BsStarFill, BsHeart} from "react-icons/bs";
 import {addCart} from '../redux/cart/cart.action';
 import { useSelector,useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
 const SingleProd = () => {
-    let products = JSON.parse(localStorage.getItem('product'));
-    let [product, setProduct] = React.useState(JSON.parse(localStorage.getItem('product')))
+    //let products = JSON.parse(localStorage.getItem('product'));
+    let [product, setProduct] = useState(JSON.parse(localStorage.getItem('product')))
+    let [auth, setAuth] = useState(localStorage.getItem('isAuth')?true:false)
     let loading = useSelector(store => store.CartReducer.loading);
     let data = useSelector(store=>store.CartReducer.data)
     let dispatch=useDispatch();
     let navigate = useNavigate();
+    let toast = useToast()
+    const [loadingCart,setCartLoading] = useState(false)
+    const[added, setAdded] = useState(false);
+    const [present, setPresent] = useState(false)
 
-let addToCart=(data)=>{
-    dispatch(addCart(data))
-}
+
+    
+    let addToCart=(elem)=>{
+        setCartLoading(true)
+        dispatch(addCart(elem)).then((r)=>{
+          if(r.payload.status==1){
+            setCartLoading(false)
+            setAdded(true)
+            setPresent(true)
+            //window.location.reload()
+            toast({
+                title: 'Add To Cart',
+                description: "item added to cart successfully.",
+                status: 'success',
+                duration: 9000,
+                isClosable: true,
+              })
+          }else{
+            setCartLoading(false)
+             toast({
+                title: 'request failed',
+                description: "oops!! something went wrong.",
+                status: 'error',
+                duration: 9000,
+                isClosable: true,
+              })
+          }
+        })
+        
+      }
 
 
     return (
@@ -45,10 +77,9 @@ let addToCart=(data)=>{
                             </Select>
                         </Box>
                         <Flex justifyContent={'space-around'} mt={['', '', '', '5%']}>
-                            <Button w='48%' color='white' bgColor={'purple.500'} p={['', '', '', "6%"]} _hover={{ bgColor: "purple.800" }} onClick={()=>addToCart(product)}>
-                                {loading?<Box ml="40%">
-                                    <CircularProgress isIndeterminate color='pink.500' size="40%" thickness={'10px'}/>
-                                    </Box>:<Text>Add To Cart</Text>}
+                        {/* onClick={()=>addToCart(product)} */}
+                            <Button w='48%' color='white' bgColor={'purple.500'} p={['', '', '', "6%"]} _hover={{ bgColor: "purple.800" }} onClick={()=>{if(auth){addToCart(product)}else{navigate('/login')}}}>
+                            {loadingCart?<Text>Adding...</Text>:<Text >Add To Cart</Text>}
                             </Button>
                             <Button w="48%" display={'flex'} p={['', '', '', "6%"]}>
                                 <BsHeart size="25" color="purple.100" />

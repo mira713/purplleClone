@@ -6,12 +6,13 @@ import {eyemakeup} from '../../redux/product/prod.action';
 import {Box,Image,Text,Grid,Flex,Button,CircularProgress,useToast} from "@chakra-ui/react";
 import { BsCartPlusFill, BsHeartFill, BsStarFill } from 'react-icons/bs'
 import { useNavigate } from 'react-router-dom';
-import { addCart } from '../../redux/cart/cart.action';
+import { addCart,getCart } from '../../redux/cart/cart.action';
 
 const Eyemakeup = () => {
    let product = useSelector(store=>store.ProductReducer.data);
+   let cartData = useSelector(store=>store.CartReducer.data)
    let loading = useSelector(store=>store.ProductReducer.loading);
-   let loadingCart = useSelector(store => store.CartReducer.loading);
+   let [loadingCart,setCartLoading] = useState(false);
    let dispatch = useDispatch();
    let navigate = useNavigate();
    let [data, setData] = useState(product)
@@ -21,24 +22,41 @@ const Eyemakeup = () => {
 
   useEffect(()=>{
     dispatch(eyemakeup())
-    
+   dispatch(getCart())
   },[])
+
 
   if(loading){
     <div>...loading</div>
   }
   let addToCart=(elem)=>{
-    dispatch(addCart(elem))
-    toast({
-      title: 'Add To Cart',
-      description: "item added to cart successfully.",
-      status: 'success',
-      duration: 9000,
-      isClosable: true,
+    setCartLoading(true)
+    dispatch(addCart(elem)).then((r)=>{
+      if(r.payload.status==1){
+        setCartLoading(false)
+        toast({
+            title: 'Add To Cart',
+            description: "item added to cart successfully.",
+            status: 'success',
+            duration: 9000,
+            isClosable: true,
+          })
+      }else{
+        setCartLoading(false)
+         toast({
+            title: 'request failed',
+            description: "oops!! something went wrong.",
+            status: 'error',
+            duration: 9000,
+            isClosable: true,
+          })
+      }
     })
+    
   }
+
 let getProductDetail=(item)=>{
-  localStorage.setItem(JSON.stringify('product',item));
+  localStorage.setItem('product', JSON.stringify(item));
   navigate('/singleProd')
 }
   return (
@@ -48,9 +66,9 @@ let getProductDetail=(item)=>{
         <Grid className='grid' templateColumns={{ base: '1fr', md: 'repeat(2, 1fr)', lg:"repeat(4,1fr)" }} gap={4}>
           {product.map((el) => {
             return (
-              <Box key={el._id} className='singlePro' onClick={()=>getProductDetail(el)}>
-                <Image src={el.img} alt={el._id} h="50%" w='100%' />
-                <Box className='detail'>
+              <Box key={el._id} className='singlePro'>
+                <Image src={el.img} alt={el._id} h="50%" w='100%'  onClick={()=>getProductDetail(el)}/>
+                <Box className='detail' onClick={()=>getProductDetail(el)}>
                   <Box className='text'>
                     <Text>{el.name}</Text>
                   </Box>
@@ -75,11 +93,10 @@ let getProductDetail=(item)=>{
                 </Box>
                 <Flex className="flexbox">
                   <Button onClick={() => addToCart(el)}>
-                    <BsCartPlusFill size='25' />
+                    
+                       <Text >Add To Cart</Text>
+                     
                   </Button>
-                  <Button>
-                    <BsHeartFill size="25" color="red" />
-                    </Button>
                 </Flex>
               </Box>
             );

@@ -6,7 +6,7 @@ import PaymentNav from './paymentNav'
 import { useDispatch, useSelector } from 'react-redux';
 import { deleteCart, getCart } from '../../redux/cart/cart.action';
 //import { postOrder } from '../../Redux/Order/action';
-import { Skeleton, Stack,Flex } from '@chakra-ui/react'
+import { Skeleton, Stack, useDisclosure, Modal, ModalFooter, ModalBody, Button, Text, ModalContent, ModalHeader, ModalCloseButton, ModalOverlay, ModalCloseButto } from '@chakra-ui/react'
 import { useEffect } from 'react';
 function Payment() {
     const dispatch = useDispatch()
@@ -19,6 +19,7 @@ function Payment() {
     const [pin, setPin] = useState('');
     const [city, setCity] = useState('')
     const [state, setState] = useState('');
+    const { isOpen, onOpen, onClose } = useDisclosure()
 
     useEffect(() => {
         dispatch(getCart())
@@ -28,8 +29,6 @@ function Payment() {
     const payNavigate = () => {
 
 
-        //dispatch(postOrder(cart))
-        //dispatch(deleteCart(id))
 
         navigate("/payment")
     }
@@ -65,7 +64,10 @@ function Payment() {
             <Skeleton height='20px' />
         </Stack>)
     }
-
+    let closed = () => {
+        onClose();
+        navigate('/')
+    }
     return (
 
 
@@ -97,14 +99,31 @@ function Payment() {
                         <input className='input' type="text" name="" value={city} onChange={event => setCity(event.target.value)} placeholder='City/District' />
                         <br />
                         <input className='input' type="text" name="" value="India" placeholder='Address Line 1' />
-                        <input className='input' type="text" name="" value={state} onChange={event => setState(event.target.value)}  placeholder='State' />
+                        <input className='input' type="text" name="" value={state} onChange={event => setState(event.target.value)} placeholder='State' />
                         <br />
-                        <button id='shiping' onClick={payNavigate} disabled={!email || !name || name.length < 3 || !mob || mob.length < 10}>checkout</ button>
+                        <button id='shiping' onClick={onOpen} disabled={!email || !name || name.length < 3 || !mob || mob.length < 10}>checkout</ button>
                     </div>
                     <div>or</div>
                     <button id="shiping">Cancel</button>
                 </div>
             </div>
+            <Modal isOpen={isOpen} onClose={onClose}>
+                <ModalOverlay />
+                <ModalContent>
+                    <ModalHeader>payment successful!!</ModalHeader>
+                    <ModalCloseButton />
+                    <ModalBody>
+                        <video src="https://media.tenor.com/HCJnS_GSJk4AAAAj/like-gif.gif" height={'40%'} width="40%"></video>
+                        <Text>Thank You For Shopping!!</Text>
+                    </ModalBody>
+
+                    <ModalFooter>
+                        <Button colorScheme='blue' mr={3} onClick={closed}>
+                            Close
+                        </Button>
+                    </ModalFooter>
+                </ModalContent>
+            </Modal>
         </>
     )
 }
