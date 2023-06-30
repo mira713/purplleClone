@@ -44,7 +44,7 @@ const AllRoute = () => {
             <Route path="/purplle" element={<Purplle/>}/>
             <Route path="/singleProd" element={<SingleProd/>}/>
             <Route path="/order" element={<PrivateRoute><OrderPage/></PrivateRoute>}/>
-            <Route path="/payment" element={<Payment/>}/>
+            <Route path="/payment" element={<PrivateRoute><Payment/></PrivateRoute>}/>
             <Route path='/wishlist' element={<Wishlist/>}/>
         </Routes>
     </div>

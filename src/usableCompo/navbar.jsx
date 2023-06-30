@@ -133,7 +133,7 @@ const Navbar = () => {
             </Box>
             <Box mr="2%" onClick={() => navigate('/order')} position="relative">
               <BsCartPlus size="30" />
-              <div style={{height:'25px', width:"25px", borderRadius:"50%", backgroundColor:"red",color:"white",position:"absolute", top:"-13px", left:"13px",visibility:countCart==0&&auth==true?"hidden":""}}>{countCart}</div>
+              <div style={{height:'25px', width:"25px", borderRadius:"50%", backgroundColor:"red",color:"white",position:"absolute", top:"-13px", left:"13px",visibility:countCart==0&&auth==true?"hidden":"visible",display:countCart==0&&auth==true?"none":""}}>{countCart}</div>
             </Box>
           </Box>
         </Box>

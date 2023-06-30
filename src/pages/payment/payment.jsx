@@ -11,24 +11,34 @@ import { useEffect } from 'react';
 function Payment() {
     const dispatch = useDispatch()
     const { isLoading, isError, cart, id } = useSelector((store) => store.CartReducer);
-    const [email, setEmail] = useState('')
-    const [name, setName] = useState('')
-    const [mob, setMob] = useState('')
+    //const user = useSelector(store => store.AuthReducer.user);
+    let [user, setUser]= useState(JSON.parse(localStorage.getItem("logged_user")))
+    let [f_name, setfirstName] = useState(user.name?.split(' ')[0])
+    let [l_name, setlastName] = useState(user.name?.split(' ')[1])
+    const [email, setEmail] = useState(user.email)
+    const [mob, setMob] = useState(user.number)
     const [ad1, setAdd1] = useState('');
     const [ad2, setAdd2] = useState('');
     const [pin, setPin] = useState('');
     const [city, setCity] = useState('')
     const [state, setState] = useState('');
-    const { isOpen, onOpen, onClose } = useDisclosure()
+    const { isOpen, onOpen, onClose } = useDisclosure();
 
+    
+   // console.log('user h bhai', user)
+   //console.log(user.name?.split(' ')[0])
+    const navigate = useNavigate()
+
+    // let value = () => {
+    //     setlastName(user.name?.split()[1]);
+    //     setMob(user.number);
+    //     setEmail(user.email)
+    // }
     useEffect(() => {
         dispatch(getCart())
+        // value()
     }, [])
-
-    const navigate = useNavigate()
     const payNavigate = () => {
-
-
 
         navigate("/payment")
     }
@@ -80,8 +90,8 @@ function Payment() {
 
                     <h1 id='ships'>Shipping Address</h1>
                     <div id="shipping-ad">
-                        <input type="text" value={name} onChange={event => setName(event.target.value)} name="First Name" placeholder='First Name *' className='input' />
-                        <input type="text" name="Last Name*" placeholder="Last Name" className='input' />
+                        <input type="text" value={f_name} name="First Name*" placeholder='First Name' className='input' onChange={event => setfirstName(event.target.value)} />
+                        <input type="text" value={l_name} name="Last Name*" placeholder="Last Name" className='input' onChange={event => setlastName(event.target.value)} />
                         <div id="radio">
                             <label>Gender</label>
                             <input type="radio" id="Male" name="Male" value="Male" />
@@ -89,7 +99,7 @@ function Payment() {
                             <input type="radio" id="Female" name="Male" value="Female" />
                             <label for="Female">Female</label>
                         </div>
-                        <input className='input' value={mob} onChange={event => setMob(event.target.value)} type="number" name="number" placeholder='Number *' />
+                        <input className='input' value={mob} type="number" name="number" placeholder="mobile number" onChange={event => setMob(event.target.value)} />
                         <input className='input' value={email} onChange={event => setEmail(event.target.value)} type="email" name="Email" placeholder='Email *' />
                         <hr />
                         <input className='input' type="text" name="" value={ad1} onChange={event => setAdd1(event.target.value)} placeholder='Addresh Line 1' />
@@ -101,10 +111,10 @@ function Payment() {
                         <input className='input' type="text" name="" value="India" placeholder='Address Line 1' />
                         <input className='input' type="text" name="" value={state} onChange={event => setState(event.target.value)} placeholder='State' />
                         <br />
-                        <button id='shiping' onClick={onOpen} disabled={!email || !name || name.length < 3 || !mob || mob.length < 10}>checkout</ button>
+                        <button id='shiping' onClick={onOpen} disabled={!email || !f_name || !mob || mob.length < 10}>checkout</ button>
                     </div>
                     <div>or</div>
-                    <button id="shiping">Cancel</button>
+                    <button id="shiping"onClick={()=>navigate('/order')}>Cancel</button>
                 </div>
             </div>
             <Modal isOpen={isOpen} onClose={onClose}>
@@ -113,7 +123,9 @@ function Payment() {
                     <ModalHeader>payment successful!!</ModalHeader>
                     <ModalCloseButton />
                     <ModalBody>
-                        <video src="https://media.tenor.com/HCJnS_GSJk4AAAAj/like-gif.gif" height={'40%'} width="40%"></video>
+                        <video height={'40%'} width="40%" src="https://media.tenor.com/HCJnS_GSJk4AAAAj/like-gif.gif">
+                           
+                        </video>
                         <Text>Thank You For Shopping!!</Text>
                     </ModalBody>
 
@@ -127,5 +139,6 @@ function Payment() {
         </>
     )
 }
+
 
 export default Payment

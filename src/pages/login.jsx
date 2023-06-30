@@ -1,14 +1,9 @@
 import "./login.css";
 import { Link, useNavigate } from "react-router-dom";
 import { useState,useEffect } from "react";
-import axios from "axios";
-import { SetLocal } from "../Utils/localStorage";
 import { useToast } from "@chakra-ui/react";
 import { useSelector, useDispatch } from "react-redux";
 import { LoginUser } from "../redux/authCred/auth.action"; 
-const baseUrl = 'https://average-wrap-eel.cyclic.app'
-// import Loading from "../../Components/CartProductCard/Loading";
-// import swal from "sweetalert"
 
 function Login() {
   const [email, setEmail] = useState("");
@@ -27,7 +22,7 @@ function Login() {
     if (email !== "" && password !== "") {
            
       dispatch(LoginUser(obj)).then(r=>{
-         
+         console.log(r)
         if(localStorage.getItem("token")){
           setload(false)
           (toast({
@@ -112,7 +107,7 @@ function Login() {
 
               <p>
                 <button className="login_button">
-                  {Load?<p>LOOKING FOR CRIDENTIALS</p>:<p>LOGIN TO YOUR ACCOUNT</p>}
+                  {Load?<p>LOOKING FOR CREDENTIALS...</p>:<p>LOGIN TO YOUR ACCOUNT</p>}
                 </button>
               </p>
             </form>

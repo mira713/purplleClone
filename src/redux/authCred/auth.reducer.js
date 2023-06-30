@@ -6,7 +6,8 @@ const initialState = {
     token: '',
     isAuthLoading: false,
     isAuthError: false,
-    data:{}
+    data:{},
+    user:{}
 }
 
 export const reducer = (state = initialState, action) => {
@@ -31,8 +32,10 @@ export const reducer = (state = initialState, action) => {
         }
         case types.GET_SUCCESS_LOGIN:{
             SetLocal('isAuth', true)
+            console.log(payload.user,'reducer')
+            localStorage.setItem('logged_user',JSON.stringify(payload.user))
             return {
-                ...state, isLoading:false,isError : false, token : payload , isAuth: true
+                ...state, isLoading:false,isError : false, token : payload , isAuth: true,user: payload.user
             }
         }
         case types.GET_FAIL_LOGIN:{
