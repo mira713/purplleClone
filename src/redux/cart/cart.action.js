@@ -7,7 +7,7 @@ import {
     CART_GET_SUCCESS,
 } from "./cart.type";
 import axios from "axios";
-const baseUrl = 'https://average-wrap-eel.cyclic.app';
+const baseUrl = 'https://exuberant-bass-wrap.cyclic.cloud';
 
 
 export const getCart = (page=1) => async (dispatch) => {

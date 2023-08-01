@@ -4,8 +4,9 @@ import axios from 'axios';
 export const getData = (page) => async(dispatch)=>{
     dispatch({type:PRODUCT_LOAD})
     try{
-       let res = await axios.get(`https://average-wrap-eel.cyclic.app/product/get?page=${page}`);
+       let res = await axios.get(`https://exuberant-bass-wrap.cyclic.cloud/product/get?page=${page}`);
        res = res.data;
+       console.log(res.data,'action')
        dispatch({type:PRODUCT_GET,payload:res.data})
     }catch(e){
         console.log(e.message)
@@ -16,7 +17,7 @@ export const getData = (page) => async(dispatch)=>{
 export const facemakeup = () => async(dispatch)=>{
     dispatch({type:PRODUCT_LOAD})
     try{
-        let res = await axios.get('https://average-wrap-eel.cyclic.app/product');
+        let res = await axios.get('https://exuberant-bass-wrap.cyclic.cloud/product');
         res = res.data;
         console.log(res.data)
         let filtered = res.filter((el)=>{
@@ -35,7 +36,7 @@ export const facemakeup = () => async(dispatch)=>{
 export const lipmakeup = () => async(dispatch)=>{
     dispatch({type:PRODUCT_LOAD})
     try{
-        let res = await axios.get('https://average-wrap-eel.cyclic.app/product');
+        let res = await axios.get('https://exuberant-bass-wrap.cyclic.cloud/product');
         res = res.data;
         let filtered = res.filter((el)=>{
             let l = el.name.toLowerCase();
@@ -52,7 +53,7 @@ export const lipmakeup = () => async(dispatch)=>{
 export const eyemakeup = () => async(dispatch)=>{
     dispatch({type:PRODUCT_LOAD})
     try{
-        let res = await axios.get('https://average-wrap-eel.cyclic.app/product');
+        let res = await axios.get('https://exuberant-bass-wrap.cyclic.cloud/product');
         res = res.data;
         let filtered = res.filter((el)=>{
             let l = el.name.toLowerCase();
@@ -69,7 +70,7 @@ export const eyemakeup = () => async(dispatch)=>{
 export const nailmakeup = () => async(dispatch)=>{
     dispatch({type:PRODUCT_LOAD})
     try{
-        let res = await axios.get('https://average-wrap-eel.cyclic.app/product');
+        let res = await axios.get('https://exuberant-bass-wrap.cyclic.cloud/product');
         res = res.data;
         let filtered = res.filter((el)=>{
             let l = el.name.toLowerCase();
@@ -86,7 +87,7 @@ export const nailmakeup = () => async(dispatch)=>{
 export const hairmakeup = () => async(dispatch)=>{
     dispatch({type:PRODUCT_LOAD})
     try{
-        let res = await axios.get('https://average-wrap-eel.cyclic.app/product');
+        let res = await axios.get('https://exuberant-bass-wrap.cyclic.cloud/product');
         res = res.data;
         let filtered = res.filter((el)=>{
             let l = el.name.toLowerCase();
@@ -102,7 +103,7 @@ export const hairmakeup = () => async(dispatch)=>{
 export const lakme = () => async(dispatch)=>{
     dispatch({type:PRODUCT_LOAD})
     try{
-        let res = await axios.get('https://average-wrap-eel.cyclic.app/product');
+        let res = await axios.get('https://exuberant-bass-wrap.cyclic.cloud/product');
         res = res.data;
         let filtered = res.filter((el)=>{
             let l = el.name.toLowerCase();
@@ -118,7 +119,7 @@ export const lakme = () => async(dispatch)=>{
 export const facecanada = () => async(dispatch)=>{
     dispatch({type:PRODUCT_LOAD})
     try{
-        let res = await axios.get('https://average-wrap-eel.cyclic.app/product');
+        let res = await axios.get('https://exuberant-bass-wrap.cyclic.cloud/product');
         res = res.data;
         let filtered = res.filter((el)=>{
             let l = el.name.toLowerCase();
@@ -134,7 +135,7 @@ export const facecanada = () => async(dispatch)=>{
 export const goodvibe = () => async(dispatch)=>{
     dispatch({type:PRODUCT_LOAD})
     try{
-        let res = await axios.get('https://average-wrap-eel.cyclic.app/product');
+        let res = await axios.get('https://exuberant-bass-wrap.cyclic.cloud/product');
         res = res.data;
         let filtered = res.filter((el)=>{
             let l = el.name.toLowerCase();
@@ -150,7 +151,7 @@ export const goodvibe = () => async(dispatch)=>{
 export const maybeline = () => async(dispatch)=>{
     dispatch({type:PRODUCT_LOAD})
     try{
-        let res = await axios.get('https://average-wrap-eel.cyclic.app/product');
+        let res = await axios.get('https://exuberant-bass-wrap.cyclic.cloud/product');
         res = res.data;
         let filtered = res.filter((el)=>{
             let l = el.name.toLowerCase();
@@ -166,7 +167,7 @@ export const maybeline = () => async(dispatch)=>{
 export const nybae = () => async(dispatch)=>{
     dispatch({type:PRODUCT_LOAD})
     try{
-        let res = await axios.get('https://average-wrap-eel.cyclic.app/product');
+        let res = await axios.get('https://exuberant-bass-wrap.cyclic.cloud/product');
         res = res.data;
         let filtered = res.filter((el)=>{
             let l = el.name.toLowerCase();
@@ -182,7 +183,7 @@ export const nybae = () => async(dispatch)=>{
 export const purplle = () => async(dispatch)=>{
     dispatch({type:PRODUCT_LOAD})
     try{
-        let res = await axios.get('https://average-wrap-eel.cyclic.app/product');
+        let res = await axios.get('https://exuberant-bass-wrap.cyclic.cloud/product');
         res = res.data;
         let filtered = res.filter((el)=>{
             let l = el.name.toLowerCase();

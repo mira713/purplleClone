@@ -1,6 +1,6 @@
 import {GET_USER_FAILURE,GET_USER_SUCCESS,GET_USER_REQUEST,GET_SUCCESS_LOGIN,GET_FAIL_LOGIN} from "./auth.type";
 import axios from "axios";
-const baseUrl = 'https://average-wrap-eel.cyclic.app';
+const baseUrl = 'https://exuberant-bass-wrap.cyclic.cloud';
 
 
 export const AllUsers =()=>(dispatch)=>{

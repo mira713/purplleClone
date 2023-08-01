@@ -4,7 +4,7 @@ import axios from 'axios';
 export const search = (query) => async(dispatch) => {
     dispatch({type:PRODUCT_LOADS})
     try{
-        let res = await axios.get(`https://average-wrap-eel.cyclic.app/search/item/${query}`);
+        let res = await axios.get(`https://exuberant-bass-wrap.cyclic.cloud/search/item/${query}`);
         res = res.data;
         dispatch({type:PRODUCT_SEARCH,payload:res})
     }catch(e){
