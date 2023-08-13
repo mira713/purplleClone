@@ -7,11 +7,11 @@ import { Box, Image, Text, Grid, Flex, Button, CircularProgress ,useToast} from 
 import { BsCartPlusFill, BsHeartFill, BsStarFill } from 'react-icons/bs';
 import { useNavigate } from 'react-router-dom';
 import { addCart } from '../../redux/cart/cart.action';
+import Loading from "../../usableCompo/Loading/Loading"
 
 const Purplle = () => {
   let product = useSelector(store => store.ProductReducer.data);
-  let loading = useSelector(store => store.ProductReducer.loading);
-  let loadingCart = useSelector(store => store.CartReducer.loading);
+  let loads = useSelector(store => store.ProductReducer.loading);
   let dispatch = useDispatch();
   let navigate =  useNavigate();
   let toast = useToast();
@@ -23,11 +23,9 @@ const Purplle = () => {
     localStorage.setItem('product', JSON.stringify(item));
     navigate('/singleProd')
   }
-  if (loading) {
-    <div>...loading</div>
-  }
+ 
   let addToCart=(elem)=>{
-    dispatch(addCart(elem))
+    dispatch(addCart(elem)).then((res)=>window.location.reload())
     toast({
       title: 'Add To Cart',
       description: "item added to cart successfully.",
@@ -38,7 +36,7 @@ const Purplle = () => {
   }
   return (
     <div>
-      {loading && <Grid className='grid'templateColumns={{ base: '1fr', md: 'repeat(2, 1fr)', lg:"repeat(4,1fr)" }} gap={4}>
+      {loads? <div><Loading/></div> :  <Grid className='grid'templateColumns={{ base: '1fr', md: 'repeat(2, 1fr)', lg:"repeat(4,1fr)" }} gap={4}>
         {product.map((el) => {
           return (
             <Box key={el._id} className='singlePro'>

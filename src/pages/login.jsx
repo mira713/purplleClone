@@ -25,6 +25,7 @@ function Login() {
          console.log(r)
         if(localStorage.getItem("token")){
           setload(false)
+          navigate('/')
           (toast({
             title: 'Login successful!',
             description: "You are Already logged in",

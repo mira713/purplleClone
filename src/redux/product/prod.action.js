@@ -19,7 +19,7 @@ export const facemakeup = () => async(dispatch)=>{
     try{
         let res = await axios.get('https://exuberant-bass-wrap.cyclic.cloud/product');
         res = res.data;
-        console.log(res.data)
+        console.log('res.data is',res)
         let filtered = res.filter((el)=>{
             let l = el.name.toLowerCase();
             if(l.includes('makeup')||l.includes('primer')){

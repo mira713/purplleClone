@@ -1,17 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import "./product.css";
-import { useSearchParams ,useNavigate} from "react-router-dom";
+import { useSearchParams, useNavigate } from "react-router-dom";
 import { getData } from '../../redux/product/prod.action';
-import { Box, Image, Text, Grid, Heading, Flex, Button,CircularProgress ,useToast} from "@chakra-ui/react";
+import { Box, Image, Text, Grid, Heading, Flex, Button, CircularProgress, useToast } from "@chakra-ui/react";
 import Paginantion from '../../usableCompo/pagination';
 import { BsCartPlusFill, BsHeartFill, BsStarFill } from 'react-icons/bs';
 import { addCart } from '../../redux/cart/cart.action';
+import Loading from '../../usableCompo/Loading/Loading'
 
 const Product = () => {
   let product = useSelector(store => store.ProductReducer.data);
-  let loading = useSelector(store => store.CartReducer.loading);
-  // const [searchParams, setSearchParams] = useSearchParams();
+  let loads = useSelector(store => store.ProductReducer.loading);
   let dispatch = useDispatch();
   let [page, setPage] = useState(0);
   let [query, setQuery] = useState("");
@@ -24,11 +24,8 @@ const Product = () => {
     dispatch(getData(page))
   }, [page])
 
-  if (loading) {
-    <div>...loading</div>
-  }
-  let addToCart=(elem)=>{
-    dispatch(addCart(elem))
+  let addToCart = (elem) => {
+    dispatch(addCart(elem)).then((res)=>window.location.reload())
     toast({
       title: 'Add To Cart',
       description: "item added to cart successfully.",
@@ -37,22 +34,19 @@ const Product = () => {
       isClosable: true,
     })
   }
-  //  let query = searchParams.get("q")
-  //   ? searchParams.get("q").toLocaleLowerCase()
-  //   : "";
-  //console.log(product)
-  let getProductDetail=(item)=>{
+  
+  let getProductDetail = (item) => {
     localStorage.setItem('product', JSON.stringify(item));
     navigate('/singleProd')
   }
   return (
     <div>
-      {loading && <Grid className='grid'templateColumns={{ base: '1fr', md: 'repeat(2, 1fr)', lg:"repeat(4,1fr)" }} gap={4}>
+      {loads? <div><Loading/></div> :  <Grid className='grid' templateColumns={{ base: '1fr', md: 'repeat(2, 1fr)', lg: "repeat(4,1fr)" }} gap={4}>
         {product.map((el) => {
           return (
             <Box key={el._id} className='singlePro'>
-              <Image src={el.img} alt={el._id} h="50%" w='100%'onClick={()=>getProductDetail(el)} />
-              <Box className='detail'onClick={()=>getProductDetail(el)}>
+              <Image src={el.img} alt={el._id} h="50%" w='100%' onClick={() => getProductDetail(el)} />
+              <Box className='detail' onClick={() => getProductDetail(el)}>
                 <Box className='text'>
                   <Text>{el.name}</Text>
                 </Box>
@@ -62,10 +56,10 @@ const Product = () => {
                 </Box>
               </Box>
               <Flex className="flexbox">
-                  <Button onClick={() => addToCart(el)}>
-                    <Text >Add To Cart</Text>
-                  </Button>
-                </Flex>
+                <Button onClick={() => addToCart(el)}>
+                  <Text >Add To Cart</Text>
+                </Button>
+              </Flex>
             </Box>
           )
         })}

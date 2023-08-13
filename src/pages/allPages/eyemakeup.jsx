@@ -7,12 +7,11 @@ import {Box,Image,Text,Grid,Flex,Button,CircularProgress,useToast} from "@chakra
 import { BsCartPlusFill, BsHeartFill, BsStarFill } from 'react-icons/bs'
 import { useNavigate } from 'react-router-dom';
 import { addCart,getCart } from '../../redux/cart/cart.action';
+import Loading from "../../usableCompo/Loading/Loading"
 
 const Eyemakeup = () => {
    let product = useSelector(store=>store.ProductReducer.data);
-   let cartData = useSelector(store=>store.CartReducer.data)
-   let loading = useSelector(store=>store.ProductReducer.loading);
-   let [loadingCart,setCartLoading] = useState(false);
+  let loads = useSelector(store => store.ProductReducer.loading);
    let dispatch = useDispatch();
    let navigate = useNavigate();
    let [data, setData] = useState(product)
@@ -25,15 +24,9 @@ const Eyemakeup = () => {
    dispatch(getCart())
   },[])
 
-
-  if(loading){
-    <div>...loading</div>
-  }
   let addToCart=(elem)=>{
-    setCartLoading(true)
-    dispatch(addCart(elem)).then((r)=>{
+    dispatch(addCart(elem)).then((res)=>window.location.reload()).then((r)=>{
       if(r.payload.status==1){
-        setCartLoading(false)
         toast({
             title: 'Add To Cart',
             description: "item added to cart successfully.",
@@ -42,7 +35,7 @@ const Eyemakeup = () => {
             isClosable: true,
           })
       }else{
-        setCartLoading(false)
+       // setCartLoading(false)
          toast({
             title: 'request failed',
             description: "oops!! something went wrong.",
@@ -62,7 +55,7 @@ let getProductDetail=(item)=>{
   return (
     <Box>
       <Text></Text>
-      {loading && (
+      {loads? <div><Loading/></div> :  (
         <Grid className='grid' templateColumns={{ base: '1fr', md: 'repeat(2, 1fr)', lg:"repeat(4,1fr)" }} gap={4}>
           {product.map((el) => {
             return (

@@ -1,9 +1,9 @@
-import React from 'react'
+import React,{useState} from 'react'
 import { Box, Button ,Grid,Image} from '@chakra-ui/react';
 import Navbar from '../usableCompo/navbar';
 import Sliders from '../usableCompo/slider';
 import Footer from './footer';
-
+import Loading from "../usableCompo/Loading/Loading"
 let carr = [
   {
     id:7,
@@ -208,7 +208,6 @@ let data6 = [
 ]
 
 const Home = () => {
-
   var settings = {
     dots: true,
     infinite: true,
@@ -229,7 +228,9 @@ const Home = () => {
   };
 
   return (
+    
     <div>
+     
       <Box>
         <Sliders carr={carr} settings={settings} texts={'FEATURED'} data={data} sets={sets} data1={data1} data2={data2} data3={data3} data4={data4} data5={data5} data6={data6}/>
       </Box>
