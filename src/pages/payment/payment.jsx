@@ -4,15 +4,13 @@ import './pay.css'
 import { useState } from "react";
 import PaymentNav from './paymentNav'
 import { useDispatch, useSelector } from 'react-redux';
-import { deleteCart, getCart } from '../../redux/cart/cart.action';
-//import { postOrder } from '../../Redux/Order/action';
+import { deleteAllCart , getCart } from '../../redux/cart/cart.action';
 import { Skeleton, Stack, useDisclosure, Modal, ModalFooter, ModalBody, Button, Text, ModalContent, ModalHeader, ModalCloseButton, ModalOverlay, ModalCloseButto } from '@chakra-ui/react'
 import { useEffect } from 'react';
+
 function Payment() {
     const dispatch = useDispatch()
-    const { isLoading, isError, cart, id } = useSelector((store) => store.CartReducer);
-    //const user = useSelector(store => store.AuthReducer.user);
-    let [user, setUser]= useState(JSON.parse(localStorage.getItem("logged_user")))
+    let [user, setUser]= useState(JSON.parse(sessionStorage.getItem("logged_user")))
     let [f_name, setfirstName] = useState(user.name?.split(' ')[0])
     let [l_name, setlastName] = useState(user.name?.split(' ')[1])
     const [email, setEmail] = useState(user.email)
@@ -24,59 +22,27 @@ function Payment() {
     const [state, setState] = useState('');
     const { isOpen, onOpen, onClose } = useDisclosure();
 
-    
-   // console.log('user h bhai', user)
-   //console.log(user.name?.split(' ')[0])
     const navigate = useNavigate()
 
-    // let value = () => {
-    //     setlastName(user.name?.split()[1]);
-    //     setMob(user.number);
-    //     setEmail(user.email)
-    // }
     useEffect(() => {
         dispatch(getCart())
-        // value()
     }, [])
     const payNavigate = () => {
-
         navigate("/payment")
     }
 
-    if (isLoading) {
-        return (<Stack w={"90%"} m="auto" mt={"50px"}>
-            <Skeleton height='20px' />
-            <Skeleton height='20px' />
-            <Skeleton height='20px' />
-            <Skeleton height='20px' />
-            <Skeleton height='20px' />
-            <Skeleton height='20px' />
-            <Skeleton height='20px' />
-            <Skeleton height='20px' />
-            <Skeleton height='20px' />
-            <Skeleton height='20px' />
-            <Skeleton height='20px' />
-            <Skeleton height='20px' />
-            <Skeleton height='20px' />
-            <Skeleton height='20px' />
-            <Skeleton height='20px' />
-            <Skeleton height='20px' />
-            <Skeleton height='20px' />
-            <Skeleton height='20px' />
-            <Skeleton height='20px' />
-            <Skeleton height='20px' />
-            <Skeleton height='20px' />
-            <Skeleton height='20px' />
-            <Skeleton height='20px' />
-            <Skeleton height='20px' />
-            <Skeleton height='20px' />
-            <Skeleton height='20px' />
-            <Skeleton height='20px' />
-        </Stack>)
-    }
     let closed = () => {
         onClose();
-        navigate('/')
+        dispatch(deleteAllCart(user._id)).then((res)=>{
+            return(
+                navigate('/'),
+                window.location.reload()
+            )
+        })
+    }
+
+    let onOpenPop=()=>{
+        dispatch(deleteAllCart(user._id)).then((res)=>onOpen())
     }
     return (
 
@@ -111,7 +77,7 @@ function Payment() {
                         <input className='input' type="text" name="" value="India" placeholder='Address Line 1' />
                         <input className='input' type="text" name="" value={state} onChange={event => setState(event.target.value)} placeholder='State' />
                         <br />
-                        <button id='shiping' onClick={onOpen} disabled={!email || !f_name || !mob || mob.length < 10}>checkout</ button>
+                        <button id='shiping' onClick={onOpenPop} disabled={!email || !f_name || !mob || mob.length < 10}>checkout</ button>
                     </div>
                     <div>or</div>
                     <button id="shiping"onClick={()=>navigate('/order')}>Cancel</button>
@@ -123,9 +89,7 @@ function Payment() {
                     <ModalHeader>payment successful!!</ModalHeader>
                     <ModalCloseButton />
                     <ModalBody>
-                        <video height={'40%'} width="40%" src="https://media.tenor.com/HCJnS_GSJk4AAAAj/like-gif.gif">
-                           
-                        </video>
+                        <img src="https://fcs3pub.s3.amazonaws.com/photo-book/images/payment/success.gif" alt="mitali"/>
                         <Text>Thank You For Shopping!!</Text>
                     </ModalBody>
 

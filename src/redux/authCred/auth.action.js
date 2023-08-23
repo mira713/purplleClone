@@ -19,7 +19,7 @@ export const PostUser = (cred) =>(dispatch) => {
   //   })
   //       .then(function (response) {
   //           response.json()
-  //           localStorage.setItem('resp',response.status)
+  //           sessionStorage.setItem('resp',response.status)
   //           dispatch({type:GET_USER_SUCCESS,payload:response})
   //       })
         // .then((res)=>console.log(res.status))
@@ -34,7 +34,7 @@ export const LoginUser = (cred) => (dispatch) => {
    return axios
     .post(`${baseUrl}/users/login`, cred)
     .then((res) => 
-      // localStorage.setItem('token', res.data.token)
+      // sessionStorage.setItem('token', res.data.token)
      dispatch({type:GET_SUCCESS_LOGIN,payload:res.data})
       // console.log(res)
       // if(res.data.token){

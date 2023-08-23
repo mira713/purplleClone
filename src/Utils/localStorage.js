@@ -1,6 +1,6 @@
 export const GetLocal = (key) => {
     try {
-        return JSON.parse(localStorage.getItem(key));
+        return JSON.parse(sessionStorage.getItem(key));
     }
     catch (e) {
         return null;
@@ -8,9 +8,9 @@ export const GetLocal = (key) => {
 }
 
 export const SetLocal = (key, value) => {
-    return localStorage.setItem(key, JSON.stringify(value));
+    return sessionStorage.setItem(key, JSON.stringify(value));
 }
 
 export const SetRemove = (key) => {
-  return localStorage.removeItem(key);
+  return sessionStorage.removeItem(key);
 };

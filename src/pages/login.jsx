@@ -21,9 +21,11 @@ function Login() {
    let obj = {email:email,password:password}
     if (email !== "" && password !== "") {
            
-      dispatch(LoginUser(obj)).then(r=>{
-         console.log(r)
-        if(localStorage.getItem("token")){
+      dispatch(LoginUser(obj))
+      //.then((res)=>window.location.reload())
+      .then(r=>{
+         //console.log(r)
+        if(sessionStorage.getItem("token")){
           setload(false)
           navigate('/')
           (toast({
@@ -35,9 +37,10 @@ function Login() {
         }))
         }else
         if(r.payload.msg) {
-          localStorage.setItem('token',r.payload.token)
+          sessionStorage.setItem('token',r.payload.token)
           setload(false)
           navigate('/')
+          window.location.reload();
           (toast({
               title: 'Login successful!',
               description: "You are Logged In",

@@ -9,7 +9,9 @@ import {
   import { PriceTag } from "./priceTag";
   import { CartProductMeta } from "./cartProduct";
   import { useDispatch } from "react-redux";
-  import {deleteCart, updateCart} from "../../redux/cart/cart.action"
+  import {deleteCart, updateCart} from "../../redux/cart/cart.action";
+
+  
   export const CartItem = ({item,handleChange,handleDelete}) => {
     const {
       _id,

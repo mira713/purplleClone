@@ -1,4 +1,4 @@
-import { GetLocal, SetLocal } from '../../Utils/localStorage';
+import { GetLocal, SetLocal } from '../../Utils/sessionStorage';
 import * as types from './auth.type'
 //  GetLocal('isAuth') || null,
 const initialState = {
@@ -33,7 +33,7 @@ export const reducer = (state = initialState, action) => {
         case types.GET_SUCCESS_LOGIN:{
             SetLocal('isAuth', true)
             console.log(payload.user,'reducer')
-            localStorage.setItem('logged_user',JSON.stringify(payload.user))
+            sessionStorage.setItem('logged_user',JSON.stringify(payload.user))
             return {
                 ...state, isLoading:false,isError : false, token : payload , isAuth: true,user: payload.user
             }

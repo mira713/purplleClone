@@ -12,6 +12,7 @@ import Loading from '../../usableCompo/Loading/Loading'
 const Product = () => {
   let product = useSelector(store => store.ProductReducer.data);
   let loads = useSelector(store => store.ProductReducer.loading);
+  let [auth, setAuth] = useState(sessionStorage.getItem('isAuth') ? true : false)
   let dispatch = useDispatch();
   let [page, setPage] = useState(0);
   let [query, setQuery] = useState("");
@@ -36,7 +37,7 @@ const Product = () => {
   }
   
   let getProductDetail = (item) => {
-    localStorage.setItem('product', JSON.stringify(item));
+    sessionStorage.setItem('product', JSON.stringify(item));
     navigate('/singleProd')
   }
   return (
@@ -56,7 +57,7 @@ const Product = () => {
                 </Box>
               </Box>
               <Flex className="flexbox">
-                <Button onClick={() => addToCart(el)}>
+                <Button onClick={() => { if (auth) { addToCart(el) } else { navigate('/login') } }}>
                   <Text >Add To Cart</Text>
                 </Button>
               </Flex>

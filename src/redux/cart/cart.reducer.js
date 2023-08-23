@@ -9,7 +9,7 @@ import {
 
 const initialState={
     data : [],
-    loading: false,
+    loading: true,
     count: 0,
     error:false
  }
@@ -24,7 +24,9 @@ const initialState={
          return {
              ...state,
              data : payload.da,
-             count : payload.c
+             count : payload.c,
+             loading:false,
+             error:false
          }
      }
      case CART_FUNC_ERROR:{
@@ -62,6 +64,8 @@ const initialState={
         return {
             ...state,
             data : filtered,
+            error:false,
+            loading:false
         }
      }
 
@@ -75,6 +79,8 @@ const initialState={
         return {
             ...state,
             data : filtered,
+            error:false,
+            loading:false
         }
      }
     }

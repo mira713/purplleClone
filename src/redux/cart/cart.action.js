@@ -11,7 +11,7 @@ const baseUrl = 'https://exuberant-bass-wrap.cyclic.cloud';
 
 
 export const getCart = (page=1) => async (dispatch) => {
-    let token = localStorage.getItem('token');
+    let token = sessionStorage.getItem('token');
     const config = {
         headers: {
             'Content-type': 'application/json',
@@ -39,13 +39,13 @@ export const addCart = (data) => (dispatch) => {
     dispatch({ type: CART_FUNC_LOADING });
     obj = [obj]
 
-    return axios.post(`${baseUrl}/cart/add`,obj,{headers:{tkn:localStorage.getItem("token")}})
+    return axios.post(`${baseUrl}/cart/add`,obj,{headers:{tkn:sessionStorage.getItem("token")}})
     .then(r=>dispatch({type: CART_ADD_SUCCESS, payload:r.data}))
 }
 
 export const updateCart = (product) => async (dispatch) => {
     let {productId, quantity} = product
-    let token = localStorage.getItem('token');
+    let token = sessionStorage.getItem('token');
     dispatch({ type: CART_FUNC_LOADING });
     fetch(`${baseUrl}/cart/${productId}`, {
         method: 'PATCH',
@@ -63,7 +63,7 @@ export const updateCart = (product) => async (dispatch) => {
 }
 
 export const deleteCart = (id) => async (dispatch) => {
-    let token = localStorage.getItem('token');
+    let token = sessionStorage.getItem('token');
     dispatch({ type: CART_FUNC_LOADING });
     fetch(`${baseUrl}/cart/${id}`, {
         method: 'DELETE',
@@ -78,4 +78,20 @@ export const deleteCart = (id) => async (dispatch) => {
         })
 
         .catch((err) => dispatch({ type: CART_FUNC_ERROR, payload: err.message }))
+}
+
+export const deleteAllCart = (id) => async(dispatch) => {
+    let token = sessionStorage.getItem('token');
+    dispatch({type:CART_FUNC_LOADING});
+    fetch(`${baseUrl}/cart/del/${id}`,{
+        method : "DELETE",
+        headers : {
+            "Content-type": "application/json",
+            "tkn" : token
+        }
+    }).then((res)=>{
+        res.json()
+        dispatch({type : CART_DELETE_SUCCESS, payload :res})
+    })
+    .catch((err)=>dispatch({type:CART_FUNC_ERROR, payload: err.message}))
 }

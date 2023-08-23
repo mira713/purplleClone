@@ -19,7 +19,7 @@ const Navbar = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   let product = useSelector(store => store.SearchReducer.data) || [];
   let countCart = useSelector(store=>store.CartReducer.count);
-  let [auth, setAuth] = useState(localStorage.getItem('isAuth')?true:false)
+  let [auth, setAuth] = useState(sessionStorage.getItem('isAuth')?true:false)
   let loading = useSelector(store => store.SearchReducer.loading);
   let [text, setText] = useState('');
   let dispatch = useDispatch()
@@ -44,21 +44,18 @@ const Navbar = () => {
     onOpen1();
   }
 
-  // let query = searchParams.get("q")
-  // ? searchParams.get("q").toLocaleLowerCase()
-  // : "";
-
-
   let singlePage = (item) => {
     onClose()
-    localStorage.setItem("product", JSON.stringify(item))
+    sessionStorage.setItem("product", JSON.stringify(item))
     navigate('/singleProd')
+    window.location.reload()
   }
   let LogOut = () => {
-    let isAuth= localStorage.getItem('isAuth');
+    let isAuth= sessionStorage.getItem('isAuth');
     if(isAuth){
-      localStorage.removeItem('token')
-      localStorage.removeItem('isAuth')
+      sessionStorage.removeItem('token')
+      sessionStorage.removeItem('isAuth')
+      sessionStorage.removeItem('logged_user')
       
       toast({
         title: 'logout successfully !',
@@ -119,7 +116,7 @@ const Navbar = () => {
                   left={['71vw', '72vw', '75vw', '72vw', '75vw']}
                   p='3vh'
                   fontSize={'13px'}>
-                  <PopoverHeader fontWeight={'bold'} backgroundColor={'purple'} color="white" p="2vh"onClick={()=>navigate('/login')}>Log in</PopoverHeader>
+                  <PopoverHeader fontWeight={'bold'} backgroundColor={'purple'} color="white" p="2vh"onClick={auth?()=>LogOut():()=>navigate('/login')}>{auth?"Log out":"Log in"}</PopoverHeader>
                   <PopoverBody>
                     <Text fontWeight="bold" mt='1' _hover={{ color: "purple" }}onClick={()=>navigate('/register')}>New Customer?<span style={{ color: "red" }}> start here</span></Text>
                     <Text fontWeight="bold" mt='1' _hover={{ color: "purple" }}>Your account</Text>
@@ -133,7 +130,7 @@ const Navbar = () => {
             </Box>
             <Box mr="2%" onClick={() => navigate('/order')} position="relative">
               <BsCartPlus size="30" />
-              <div style={{height:'25px', width:"25px", borderRadius:"50%", backgroundColor:"red",color:"white",position:"absolute", top:"-13px", left:"13px",visibility:countCart==0&&auth==true?"hidden":"visible",display:countCart==0&&auth==true?"none":""}}>{countCart}</div>
+              <div style={{height:'25px', width:"25px", borderRadius:"50%", backgroundColor:"red",color:"white",position:"absolute", top:"-13px", left:"13px",visibility:countCart==0||auth==false?"hidden":"visible",display:countCart==0&&auth==true?"none":""}}>{countCart}</div>
             </Box>
           </Box>
         </Box>

@@ -12,6 +12,7 @@ import Loading from "../../usableCompo/Loading/Loading"
 const Lakme = () => {
    let product = useSelector(store=>store.ProductReducer.data);
    let loads = useSelector(store => store.ProductReducer.loading);
+   let [auth, setAuth] = useState(sessionStorage.getItem('isAuth') ? true : false)
    let dispatch = useDispatch();
    let navigate =  useNavigate();
    let toast = useToast();
@@ -20,7 +21,7 @@ const Lakme = () => {
     dispatch(lakme())
   },[])
   let getProductDetail=(item)=>{
-    localStorage.setItem('product', JSON.stringify(item));
+    sessionStorage.setItem('product', JSON.stringify(item));
     navigate('/singleProd')
   }
 
@@ -52,7 +53,7 @@ const Lakme = () => {
                 </Box>
               </Box>
               <Flex className="flexbox">
-                  <Button onClick={() => addToCart(el)}>
+                  <Button onClick={() => { if (auth) { addToCart(el) } else { navigate('/login') } }}>
                     <Text >Add To Cart</Text>
                   </Button>
                 </Flex>
